@@ -5,10 +5,10 @@ A modern web component built with Svelte, TypeScript, and Vite. This template cr
 ## Features
 
 - 🧩 **Web Component**: Built as a native custom element (`<svelte-vite-app>`)
-- 📦 **Multiple Distribution Formats**: 
+- 📦 **Multiple Distribution Formats**:
   - ES Module (ESM)
   - Universal Module Definition (UMD)
-- 🎨 **Styling**: 
+- 🎨 **Styling**:
   - TailwindCSS support
   - CSS-in-JS with proper scoping
   - Style isolation through Shadow DOM
@@ -26,16 +26,19 @@ A modern web component built with Svelte, TypeScript, and Vite. This template cr
 - update dev.html at least with component name
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
 
 2. Start development server:
+
    ```bash
    npm run dev
    ```
 
 3. Build for production:
+
    ```bash
    npm run build
    ```
@@ -48,27 +51,31 @@ A modern web component built with Svelte, TypeScript, and Vite. This template cr
 ## Usage Examples
 
 ### In HTML (ESM)
+
 ```html
 <script type="module" src="/dist/svelte-vite-app.es.js"></script>
 <svelte-vite-app></svelte-vite-app>
 ```
 
 ### In HTML (UMD)
+
 ```html
 <script src="/dist/svelte-vite-app.umd.js"></script>
 <svelte-vite-app></svelte-vite-app>
 ```
 
 ### In JavaScript/TypeScript (ESM)
+
 ```typescript
-import 'webcomponent-svelte'
+import 'webcomponent-svelte';
 // The custom element is now registered and ready to use
-document.body.innerHTML = '<svelte-vite-app></svelte-vite-app>'
+document.body.innerHTML = '<svelte-vite-app></svelte-vite-app>';
 ```
 
 ### In a Node.js environment
+
 ```javascript
-require('webcomponent-svelte')
+require('webcomponent-svelte');
 ```
 
 ## Development
@@ -107,6 +114,7 @@ Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also pow
 - Perfect for creating reusable UI elements that can be shared across different frameworks or vanilla JS projects
 
 This template is optimized for building web components with Svelte. It includes all the necessary configuration for:
+
 - Building both ESM and UMD formats
 - Proper TypeScript definitions
 - Shadow DOM encapsulation
@@ -144,6 +152,6 @@ If you have state that's important to retain within a component, consider creati
 ```ts
 // store.ts
 // An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+import { writable } from 'svelte/store';
+export default writable(0);
 ```
