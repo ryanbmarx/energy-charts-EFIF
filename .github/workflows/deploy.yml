@@ -12,9 +12,6 @@ permissions:
 
 jobs:
   build-deploy:
-    env:
-      # VITE_INJECTABLE_API_URL: ${{secrets.VITE_INJECTABLE_API_URL }}
-      # VITE_INJECTABLE_API_KEY: ${{secrets.VITE_INJECTABLE_API_KEY }}
     concurrency:
       group: only-one
       cancel-in-progress: true
