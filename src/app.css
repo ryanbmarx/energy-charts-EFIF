@@ -38,10 +38,9 @@
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
 
-  --color-future-ed-light-blue: #f5f6ff;
-  --color-future-ed-medium-blue: #99e2f3;
-  --color-future-ed-blue: #2f48e8;
-  --color-future-ed-dark-blue: #012169;
+  --color-bar-base: #60a5a2;
+  --color-bar-highlight: #336260;
+  --color-line: #f1582e;
 }
 
 .dark {

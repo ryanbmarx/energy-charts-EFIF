@@ -1,6 +1,6 @@
 import { mount } from 'svelte';
 import './app.css';
-import App from './CNTI_AI_Legislation.svelte';
+import App from './App.wc.svelte';
 
 // Only mount to #app if it exists (regular mode)
 // Otherwise, the web component will auto-register

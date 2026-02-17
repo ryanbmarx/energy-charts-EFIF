@@ -5,5 +5,5 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  safelist: [], // Add classnames here that should ALWAYS be generated.
+  safelist: ['fill-bar-base'], // Add classnames here that should ALWAYS be generated.
 };
