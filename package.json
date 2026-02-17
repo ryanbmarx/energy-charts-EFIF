@@ -1,0 +1,63 @@
+{
+  "name": "webcomponent-svelte",
+  "version": "0.0.0",
+  "type": "module",
+  "svelte": "src/FutureEdMobilityExplorer.wc.svelte",
+  "main": "./dist/svelte-vite-app.umd.js",
+  "module": "./dist/svelte-vite-app.es.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "svelte": "./src/FutureEdMobilityExplorer.wc.svelte",
+      "import": "./dist/svelte-vite-app.es.js",
+      "require": "./dist/svelte-vite-app.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "npm run data && vite",
+    "build": "npm run data && vite build",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
+    "data": "echo 'There is no data step'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "npm-run-all --parallel lint:*",
+    "lint:prettier": "prettier --check .",
+    "lint:eslint": "eslint .",
+    "lint:svelte": "svelte-check --tsconfig ./tsconfig.app.json",
+    "fix": "eslint --fix .",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@lucide/svelte": "^0.522.0",
+    "@sveltejs/vite-plugin-svelte": "^5.1.0",
+    "@tailwindcss/vite": "^4.1.10",
+    "@tsconfig/svelte": "^5.0.4",
+    "@types/d3-format": "^3.0.4",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^24.0.3",
+    "bits-ui": "^2.8.8",
+    "d3-dsv": "^3.0.1",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-svelte": "^3.13.1",
+    "globals": "^16.5.0",
+    "lodash-es": "^4.17.21",
+    "mode-watcher": "^1.0.8",
+    "npm-run-all2": "^8.0.4",
+    "prettier": "^3.3.3",
+    "prettier-plugin-svelte": "^3.2.8",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "svelte": "^5.46.0",
+    "svelte-check": "^4.1.6",
+    "svelte-eslint-parser": "^1.4.1",
+    "tailwind-merge": "^3.3.1",
+    "tailwind-variants": "^1.0.0",
+    "tailwindcss": "^4.1.10",
+    "tw-animate-css": "^1.3.4",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.49.0",
+    "vite": "^6.3.5"
+  }
+}
