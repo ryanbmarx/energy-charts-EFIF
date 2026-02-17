@@ -27,6 +27,7 @@
 </script>
 
 <div class="container">
+  {@render chartHeader({ label: 'Spending money' })}
   <BarChart
     data={budgetByYear}
     props={{
