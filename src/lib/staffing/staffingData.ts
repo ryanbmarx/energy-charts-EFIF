@@ -1,0 +1,70 @@
+type BudgetYearEntry = { year: number } & Partial<Record<keyof typeof orgs, number>>;
+
+export const orgs = {
+  OEERE: { name: 'Office of Energy Efficiency and Renewable Energy, Etc.', color: '#2D7D3F' },
+  OFECM: { name: 'Office of Fossil Energy and Carbon Management', color: '#8B5E3C' },
+  GDOOE: { name: 'Grid Deployment Office and Office of Electricity', color: '#E8A832' },
+  ONE: { name: 'Office of Nuclear Energy', color: '#7B4FA0' },
+  OCED: { name: 'Office of Clean Energy Demonstrations', color: '#2A7AB5' },
+  other: { name: 'Other innovation', color: '#95A5A6' },
+  OOS: { name: 'Office of science', color: '#D35454' },
+} as const;
+
+/** DOE budget data by year, amounts in billions of dollars */
+export const budgetByYear: BudgetYearEntry[] = [
+  { year: 2017, OEERE: 2.97, OFECM: 0.83, GDOOE: 0.26, ONE: 1.27, other: 0.56, OOS: 6.2 },
+  { year: 2018, OEERE: 3.07, OFECM: 0.97, GDOOE: 0.31, ONE: 1.48, other: 0.64, OOS: 7.15 },
+  { year: 2019, OEERE: 3.26, OFECM: 0.98, GDOOE: 0.2, ONE: 1.65, other: 0.86, OOS: 7.51 },
+  { year: 2020, OEERE: 3.74, OFECM: 1.07, GDOOE: 0.21, ONE: 1.88, other: 0.89, OOS: 8.04 },
+  { year: 2021, OEERE: 3.71, OFECM: 1.11, GDOOE: 0.22, ONE: 2.17, other: 0.88, OOS: 8.04 },
+  {
+    year: 2022,
+    OEERE: 24.74,
+    OFECM: 3.06,
+    GDOOE: 4.81,
+    ONE: 4.36,
+    OCED: 10.95,
+    other: 1.07,
+    OOS: 10.09,
+  },
+  {
+    year: 2023,
+    OEERE: 27.23,
+    OFECM: 6.05,
+    GDOOE: 11.24,
+    ONE: 5.68,
+    OCED: 15.39,
+    other: 1.42,
+    OOS: 9.94,
+  },
+  {
+    year: 2024,
+    OEERE: 25.4,
+    OFECM: 7.43,
+    GDOOE: 13.04,
+    ONE: 6.72,
+    OCED: 17.16,
+    other: 1.56,
+    OOS: 10.13,
+  },
+  {
+    year: 2025,
+    OEERE: 23.02,
+    OFECM: 7.91,
+    GDOOE: 10.17,
+    ONE: 7.1,
+    OCED: 20.26,
+    other: 1.38,
+    OOS: 11.33,
+  },
+  {
+    year: 2026,
+    OEERE: 19.55,
+    OFECM: 4.26,
+    GDOOE: 15.0,
+    ONE: 6.58,
+    OCED: 11.81,
+    other: 1.05,
+    OOS: 8.66,
+  },
+];
