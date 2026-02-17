@@ -24,6 +24,7 @@
           class: 'fill-bar-base stroke-none',
           rounded: 'none',
         },
+        highlight: { bar: { class: 'fill-bar-highlight' } },
         xAxis: { classes: { tickLabel: 'font-bold' } },
         yAxis: {
           format: (v: number) => (v === 0 ? '' : `$${v}`),
