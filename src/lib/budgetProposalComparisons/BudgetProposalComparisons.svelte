@@ -1,4 +1,6 @@
 <script lang="ts">
+  import VerticalSwitch from './VerticalSwitch.svelte';
+
   import { segments } from './budgetProposalData';
   import { Switch } from '$lib/components/ui/switch/index.js';
   type Segment = (typeof segments)[number];
@@ -60,20 +62,12 @@
 
 <svelte:window onmousemove={trackMouse} />
 <div class="segments-container" bind:this={containerEl}>
-  <div class="flex items-center justify-center gap-2">
-    <span class="switch-label switch-label--wh" class:font-bold={!highlightCongress}
-      >White House 2026 budget request</span
-    >
-    <Switch id="switch" bind:checked={highlightCongress} />
-    <span class="switch-label switch-label--cong" class:font-bold={highlightCongress}
-      >What Congress approved</span
-    >
-  </div>
+  <VerticalSwitch bind:checked={highlightCongress}></VerticalSwitch>
   <ul class="segments">
-    <li class="segment relative">
+    <li class="segment">
       <div class="segment__dots">
         {#each gridLines as { x, label, highlight } (x)}
-          <span class="gridline text-xs font-bold" class:highlight style:left="{x}%">
+          <span class="gridline" class:highlight style:left="{x}%">
             <span>{label}</span>
           </span>
         {/each}
@@ -125,7 +119,7 @@
 
   <!-- visibility:hidden keeps it in DOM so dimensions are measurable for clamping -->
   <div
-    class="tooltip rounded-md"
+    class="tooltip"
     bind:this={tooltipEl}
     style:left="{tooltipX}px"
     style:top="{tooltipY}px"
@@ -133,13 +127,13 @@
     aria-hidden={!tooltipVisible}
   >
     {#if hoveredDot}
-      <span class="font-bold">{hoveredDot.segment.name}</span>
+      <span class="tooltip__name">{hoveredDot.segment.name}</span>
       <dl>
         <dt>2025 enacted</dt>
-        <dd class="font-bold">{formatMoney(hoveredDot.segment.enacted)}</dd>
+        <dd class="tooltip__enacted">{formatMoney(hoveredDot.segment.enacted)}</dd>
         <dt>White House proposal</dt>
         <dd>
-          <span class="font-bold text-(--color-wh)"
+          <span class="tooltip__pct tooltip__pct--wh"
             >{hoveredDot.segment.diff_percentage_white_house.toFixed(1)}%</span
           >
           ({formatMoney(hoveredDot.segment.diff_absolute_white_house)})
@@ -147,7 +141,7 @@
         <dt>Congress approved</dt>
 
         <dd>
-          <span class="font-bold text-(--color-cong)"
+          <span class="tooltip__pct tooltip__pct--cong"
             >{hoveredDot.segment.diff_percentage_final_bill.toFixed(1)}%</span
           >
           ({formatMoney(hoveredDot.segment.diff_absolute_final_bill)})
@@ -165,6 +159,8 @@
     text-align: center;
     text-wrap: balance;
     max-width: 9rem;
+    font-size: 0.75rem;
+    font-weight: bold;
 
     &:last-child {
       transform: translate(-100%, 0);
@@ -193,6 +189,7 @@
     position: relative;
     overflow: hidden;
   }
+
   .segments {
     display: grid;
     gap: calc(var(--spacing) * 4);
@@ -240,7 +237,7 @@
     height: calc(var(--spacing) * 8);
     width: calc(var(--spacing) * 8);
     border-radius: 50%;
-    background: #ccc;
+    background: var(--color-zinc-400);
 
     position: absolute;
     top: 50%;
@@ -250,12 +247,6 @@
     z-index: 3;
   }
 
-  .switch-label--wh {
-    color: var(--color-wh);
-  }
-  .switch-label--cong {
-    color: var(--color-cong);
-  }
   .dot--wh.highlight {
     background-color: var(--color-wh);
   }
@@ -281,13 +272,33 @@
     pointer-events: none;
     background: white;
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 8px 12px;
     font-size: 0.875rem;
     text-wrap: balance;
     width: 20rem;
     z-index: 10;
     box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+
+    .tooltip__name {
+      font-weight: bold;
+    }
+
+    .tooltip__enacted {
+      font-weight: bold;
+    }
+
+    .tooltip__pct {
+      font-weight: bold;
+    }
+
+    .tooltip__pct--wh {
+      color: var(--color-wh);
+    }
+
+    .tooltip__pct--cong {
+      color: var(--color-cong);
+    }
 
     dl {
       display: grid;
