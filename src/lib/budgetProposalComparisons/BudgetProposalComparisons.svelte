@@ -1,8 +1,7 @@
 <script lang="ts">
   import VerticalSwitch from './VerticalSwitch.svelte';
-
   import { segments } from './budgetProposalData';
-  import { Switch } from '$lib/components/ui/switch/index.js';
+
   type Segment = (typeof segments)[number];
   type HoveredDot = { segment: Segment; budget: 'wh' | 'cong' };
 
