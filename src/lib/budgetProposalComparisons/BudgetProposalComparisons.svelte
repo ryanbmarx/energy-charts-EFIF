@@ -238,7 +238,7 @@
     width: calc(var(--spacing) * 8);
     border-radius: 50%;
     background: var(--color-zinc-400);
-
+    cursor: pointer;
     position: absolute;
     top: 50%;
     left: var(--x);
