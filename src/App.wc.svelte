@@ -1,6 +1,8 @@
 <svelte:options customElement="svelte-app-web-component" />
 
 <script lang="ts">
+  import SPCancelledFunds from './lib/cancelledFunds/SPCancelledFunds.svelte';
+
   import BudgetProposalComparisons from './lib/budgetProposalComparisons/BudgetProposalComparisons.svelte';
 
   import ChartStaffing from './lib/staffing/ChartStaffing.svelte';
@@ -21,7 +23,8 @@
 
   <h2>Congress passed DOE spending that supports nuclear and grid efforts</h2>
   <BudgetProposalComparisons></BudgetProposalComparisons>
-  <h2>Spending page charts</h2>
+  <h2>Over 70% of the cancelled award funding does not expire</h2>
+  <SPCancelledFunds></SPCancelledFunds>
   <h2>Spending page charts</h2>
 </main>
 
