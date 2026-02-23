@@ -30,6 +30,7 @@ export default tseslint.config(
     files: ['**/*.ts', '**/*.tsx', '**/*.svelte'],
     rules: {
       'no-undef': 'off', // TypeScript handles this
+      'svelte/no-at-html-tags': 'off',
     },
   },
   {

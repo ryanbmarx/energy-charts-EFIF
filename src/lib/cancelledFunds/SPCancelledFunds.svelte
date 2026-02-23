@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { PieChart, Text } from 'layerchart';
+  import BigNumber from '../components/BigNumber.svelte';
+
+  import { PieChart } from 'layerchart';
   import { data } from './cancelledFundsData';
 
   const totals = $derived.by(() => {
@@ -62,11 +64,7 @@
         tooltip={false}
         cRange={totals.map((d) => `var(${d.color})`)}
       ></PieChart>
-      <p class="big-number text-sm">
-        Total cancelled award funding: <span class="block text-2xl font-bold"
-          >${totalCancelled}B</span
-        >
-      </p>
+      <BigNumber leadin="Total cancelled award funding:" stat="${totalCancelled}B"></BigNumber>
     </div>
   </div>
 
@@ -95,16 +93,6 @@
 {/snippet}
 
 <style lang="postcss">
-  .big-number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 10rem;
-    text-align: center;
-    text-wrap-style: balance;
-  }
-
   .swatch {
     flex: 0 0 1rem;
     height: 1em;

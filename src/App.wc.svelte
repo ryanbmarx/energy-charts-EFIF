@@ -1,6 +1,10 @@
 <svelte:options customElement="svelte-app-web-component" />
 
 <script lang="ts">
+  import FedEmployeeSpending from './lib/fedEmployeeSpending/FedEmployeeSpending.svelte';
+
+  import AwardsVsLoans from './lib/awardsVsLoans/AwardsVsLoans.svelte';
+
   import SPCancelledFunds from './lib/cancelledFunds/SPCancelledFunds.svelte';
 
   import BudgetProposalComparisons from './lib/budgetProposalComparisons/BudgetProposalComparisons.svelte';
@@ -9,6 +13,7 @@
   import TBR from './lib/tbr/ChartTBR.svelte';
 
   import styles from '@/app.css?inline';
+  import CancelledVsFunded from './lib/cancelledVsFunded/CancelledVsFunded.svelte';
 </script>
 
 <svelte:element this={'style'}>{styles}</svelte:element>
@@ -25,7 +30,12 @@
   <BudgetProposalComparisons></BudgetProposalComparisons>
   <h2>Over 70% of the cancelled award funding does not expire</h2>
   <SPCancelledFunds></SPCancelledFunds>
-  <h2>Spending page charts</h2>
+  <h2>PR awards vs loans</h2>
+  <AwardsVsLoans></AwardsVsLoans>
+  <h2>Little consistency in cancelled vs. funded technologies</h2>
+  <CancelledVsFunded></CancelledVsFunded>
+  <h2>Spending on federal employees only a small part of DOE budget</h2>
+  <FedEmployeeSpending></FedEmployeeSpending>
 </main>
 
 {#snippet chartHeader({ header = '', description = '', label = '' })}
