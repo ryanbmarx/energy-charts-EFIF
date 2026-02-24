@@ -1,35 +1,30 @@
 <svelte:options customElement="svelte-app-web-component" />
 
 <script lang="ts">
+  import StaffingCuts from './StaffingCuts.svelte';
   import HistoricalStaffingChanges from './HistoricalStaffingChanges.svelte';
-
-  import SXS from './ResourcesRatio.svelte';
-
+  import ResourcesRatio from './ResourcesRatio.svelte';
   import FedEmployeeSpending from './lib/fedEmployeeSpending/FedEmployeeSpending.svelte';
-
   import AwardsVsLoans from './lib/awardsVsLoans/AwardsVsLoans.svelte';
-
   import SPCancelledFunds from './lib/cancelledFunds/SPCancelledFunds.svelte';
-
   import BudgetProposalComparisons from './lib/budgetProposalComparisons/BudgetProposalComparisons.svelte';
-
   import ChartStaffing from './lib/staffing/ChartStaffing.svelte';
   import TBR from './lib/tbr/ChartTBR.svelte';
-
-  import styles from '@/app.css?inline';
   import CancelledVsFunded from './lib/cancelledVsFunded/CancelledVsFunded.svelte';
+  import styles from '@/app.css?inline';
 </script>
 
 <svelte:element this={'style'}>{styles}</svelte:element>
 
 <main>
+  <h2>Proposed staff reductions from last full fiscal year (2024–2026)</h2>
+  <StaffingCuts></StaffingCuts>
   <h2>TBR</h2>
   <TBR {chartHeader} />
   <h2>Proposed DOE job cuts</h2>
   <p>TKTK</p>
   <h2>Staffing</h2>
   <ChartStaffing {chartHeader} />
-
   <h2>Congress passed DOE spending that supports nuclear and grid efforts</h2>
   <BudgetProposalComparisons></BudgetProposalComparisons>
   <h2>Over 70% of the cancelled award funding does not expire</h2>
@@ -41,7 +36,7 @@
   <h2>Spending on federal employees only a small part of DOE budget</h2>
   <FedEmployeeSpending></FedEmployeeSpending>
   <h2>And leave remaining staff with historically large workloads</h2>
-  <SXS></SXS>
+  <ResourcesRatio></ResourcesRatio>
   <h2>Historical changes in DOE staffing levels</h2>
   <HistoricalStaffingChanges></HistoricalStaffingChanges>
 </main>

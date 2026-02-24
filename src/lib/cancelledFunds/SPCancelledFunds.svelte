@@ -3,6 +3,7 @@
 
   import { PieChart } from 'layerchart';
   import { data } from './cancelledFundsData';
+  import Swatch from '../components/Swatch.svelte';
 
   const totals = $derived.by(() => {
     const expires = data.reduce((acc, { expires, amount }) => {
@@ -72,7 +73,7 @@
     {#each data as { name, amount, color } (name)}
       <div>
         <dt>
-          {@render swatch(`var(${color})`)}
+          <Swatch background="var({color})"></Swatch>
           {name}
         </dt>
         <dd>${amount}</dd>
@@ -80,7 +81,7 @@
     {/each}
     <div class="border-t pt-4">
       <dt>
-        {@render swatch(`var(--dark-blue)`)}
+        <Swatch background="var(--dark-blue)"></Swatch>
         <span class="sr-only">Does not expire</span>
       </dt>
       <dd>More than 70% of the cancelled award funding does not expire.</dd>
@@ -88,18 +89,7 @@
   </dl>
 </div>
 
-{#snippet swatch(background: string)}
-  <span role="presentation" class="swatch" style:background> </span>
-{/snippet}
-
 <style lang="postcss">
-  .swatch {
-    flex: 0 0 1rem;
-    height: 1em;
-    width: 1em;
-    display: inline-block;
-  }
-
   .container {
     display: flex;
     gap: calc(var(--spacing) * 6);

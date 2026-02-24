@@ -49,6 +49,7 @@
   --light-green-2: #dbe8e8;
   --gray: #575d6a;
   --red: #f1572d;
+  --blue: #0e4c82;
   --middle-blue: #3199bb;
   --dark-blue: #0e4c82;
   --transparent: #fff0;
@@ -147,5 +148,6 @@
 }
 
 .chart {
-  outline: 1px solid red;
+  position: relative;
+  overflow: hidden;
 }
