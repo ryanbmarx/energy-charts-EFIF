@@ -101,11 +101,6 @@
   }
 
   .container {
-    --dark-blue: #0e4c82;
-    --transparent: #fff0;
-    --middle-green: #60a4a1;
-    --light-green-1: #abcbca;
-    --light-green-2: #dbe8e8;
     display: flex;
     gap: calc(var(--spacing) * 6);
     flex-wrap: wrap;

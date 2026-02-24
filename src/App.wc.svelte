@@ -1,6 +1,10 @@
 <svelte:options customElement="svelte-app-web-component" />
 
 <script lang="ts">
+  import HistoricalStaffingChanges from './HistoricalStaffingChanges.svelte';
+
+  import SXS from './ResourcesRatio.svelte';
+
   import FedEmployeeSpending from './lib/fedEmployeeSpending/FedEmployeeSpending.svelte';
 
   import AwardsVsLoans from './lib/awardsVsLoans/AwardsVsLoans.svelte';
@@ -36,6 +40,10 @@
   <CancelledVsFunded></CancelledVsFunded>
   <h2>Spending on federal employees only a small part of DOE budget</h2>
   <FedEmployeeSpending></FedEmployeeSpending>
+  <h2>And leave remaining staff with historically large workloads</h2>
+  <SXS></SXS>
+  <h2>Historical changes in DOE staffing levels</h2>
+  <HistoricalStaffingChanges></HistoricalStaffingChanges>
 </main>
 
 {#snippet chartHeader({ header = '', description = '', label = '' })}

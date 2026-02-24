@@ -73,13 +73,6 @@
 
 <style lang="postcss">
   .charts {
-    --yellow: #f7c01a;
-    --middle-green: #60a4a1;
-    --gray: #575d6a;
-    --red: #f1572d;
-    --middle-blue: #3199bb;
-    --dark-blue: #0e4c82;
-
     display: grid;
     gap: calc(var(--spacing) * 4);
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
