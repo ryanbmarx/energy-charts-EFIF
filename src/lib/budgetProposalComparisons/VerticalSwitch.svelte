@@ -50,7 +50,7 @@
 
     transition:
       top 75ms ease-in-out,
-      transform 75ms ease-in-out;
+      transform 75ms ease-in-out,
       background-color 75ms ease-in-out;
   }
 
