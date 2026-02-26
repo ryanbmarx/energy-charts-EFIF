@@ -1,9 +1,9 @@
 <svelte:options customElement="svelte-app-web-component" />
 
 <script lang="ts">
-  import StaffingCuts from './StaffingCuts.svelte';
-  import HistoricalStaffingChanges from './HistoricalStaffingChanges.svelte';
-  import ResourcesRatio from './ResourcesRatio.svelte';
+  import StaffingCuts from '$lib/StaffingCuts.svelte';
+  import HistoricalStaffingChanges from '$lib//HistoricalStaffingChanges.svelte';
+  import ResourcesRatio from '$lib//ResourcesRatio.svelte';
   import FedEmployeeSpending from './lib/fedEmployeeSpending/FedEmployeeSpending.svelte';
   import AwardsVsLoans from './lib/awardsVsLoans/AwardsVsLoans.svelte';
   import SPCancelledFunds from './lib/cancelledFunds/SPCancelledFunds.svelte';
