@@ -1,6 +1,5 @@
 <script lang="ts">
   import { PieChart, Arc } from 'layerchart';
-  import Swatch from './components/Swatch.svelte';
 
   type StaffingRow = { office: string; fte2024: number; cuts2026: number };
 
