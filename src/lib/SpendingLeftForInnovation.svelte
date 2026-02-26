@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BarChart } from 'layerchart';
+  import { BarChart, Tooltip } from 'layerchart';
 
   type Entry = {
     year: number;
@@ -47,7 +47,18 @@
     x="year"
     seriesLayout="stack"
     renderContext="svg"
-  ></BarChart>
+>
+  {#snippet tooltip({ context })}
+    <Tooltip.Root {context}>
+      {#snippet children({ data })}
+        <p>{data.year}: <b>${(data.totalBudgetaryResources / 1_000_000_000).toFixed(1)}B</b></p>
+        {#if (data.obbbaRescissions ?? 0) > 0}
+          <p>Rescissions: <b>${((data.obbbaRescissions ?? 0) / 1_000_000_000).toFixed(1)}B</b></p>
+        {/if}
+      {/snippet}
+    </Tooltip.Root>
+  {/snippet}
+</BarChart>
 </div>
 
 <style lang="postcss">

@@ -1,7 +1,15 @@
-<svelte:options customElement="efif-charts" />
+<svelte:options
+  customElement={{
+    tag: 'efif-charts',
+    shadow: 'open',
+    props: {
+      data: { attribute: 'data', reflect: true },
+    },
+  }}
+/>
 
 <script lang="ts">
-  import SpendingLeftForInnovation from './SpendingLeftForInnovation.svelte';
+  import SpendingLeftForInnovation from './lib/SpendingLeftForInnovation.svelte';
   import StaffingCuts from '$lib/StaffingCuts.svelte';
   import HistoricalStaffingChanges from '$lib//HistoricalStaffingChanges.svelte';
   import ResourcesRatio from '$lib//ResourcesRatio.svelte';
@@ -14,6 +22,7 @@
   import CancelledVsFunded from './lib/cancelledVsFunded/CancelledVsFunded.svelte';
   import styles from '@/app.css?inline';
   import type { Component } from 'svelte';
+  import StaffingCutsSmall from './lib/StaffingCutsSmall.svelte';
 
   type Chart = {
     page: 'Home' | 'Spending' | 'PR';
@@ -26,6 +35,12 @@
       page: 'Home',
       Component: StaffingCuts,
       title: 'Proposed staff reductions from last full fiscal year (2024–2026)',
+    },
+    'HP-Staffing-Cuts-Small': {
+      page: 'Home',
+      Component: StaffingCutsSmall,
+      title:
+        'The White House Proposed Steep Staffing Cuts Even for Offices Supporting Its Technology Priorities',
     },
     'PEO-Cuts-Over-Time': {
       page: 'PR',
@@ -119,6 +134,8 @@
       </div>
     {/if}
     <Component {chartHeader} />
+  {:else}
+    <p>Select a chart from the dropdown</p>
   {/if}
 </main>
 
