@@ -21,6 +21,9 @@
     display: flex;
     gap: calc(4 * var(--spacing));
     align-items: flex-end;
+    max-width: 45rem;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .overall {
