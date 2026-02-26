@@ -53,6 +53,7 @@
       title: 'And leave remaining staff with historically large workloads',
     },
     FedEmployeeSpending: {
+      page: "Spending"
       Component: FedEmployeeSpending,
       page: 'Spending',
       title: 'Spending on federal employees only a small part of DOE budget',
