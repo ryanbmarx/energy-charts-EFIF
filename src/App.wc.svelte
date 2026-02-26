@@ -53,9 +53,8 @@
       title: 'And leave remaining staff with historically large workloads',
     },
     FedEmployeeSpending: {
-      page: "Spending"
-      Component: FedEmployeeSpending,
       page: 'Spending',
+      Component: FedEmployeeSpending,
       title: 'Spending on federal employees only a small part of DOE budget',
     },
     'PR-Awards-Vs-Loans': { page: 'PR', Component: AwardsVsLoans, title: 'PR awards vs loans' },
