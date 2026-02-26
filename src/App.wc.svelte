@@ -25,7 +25,7 @@
   import StaffingCutsSmall from './lib/StaffingCutsSmall.svelte';
 
   type Chart = {
-    page: 'Home' | 'Spending' | 'PR';
+    page: 'Home' | 'Spending' | 'Projects' | 'People';
     Component: Component;
     title: string;
   };
@@ -43,12 +43,12 @@
         'The White House Proposed Steep Staffing Cuts Even for Offices Supporting Its Technology Priorities',
     },
     'PEO-Cuts-Over-Time': {
-      page: 'PR',
+      page: 'People',
       Component: HistoricalStaffingChanges,
       title: 'Historical changes in DOE staffing levels',
     },
     'PEO-Cost-Of-Cuts': {
-      page: 'PR',
+      page: 'People',
       Component: ResourcesRatio,
       title: 'And leave remaining staff with historically large workloads',
     },
@@ -57,9 +57,13 @@
       Component: FedEmployeeSpending,
       title: 'Spending on federal employees only a small part of DOE budget',
     },
-    'PR-Awards-Vs-Loans': { page: 'PR', Component: AwardsVsLoans, title: 'PR awards vs loans' },
+    'PR-Awards-Vs-Loans': {
+      page: 'Projects',
+      Component: AwardsVsLoans,
+      title: 'Projects awards vs loans',
+    },
     'PR-Cancelled-Vs-funded': {
-      page: 'PR',
+      page: 'Projects',
       Component: CancelledVsFunded,
       title: 'Little consistency in cancelled vs. funded technologies',
     },
@@ -83,8 +87,8 @@
       Component: SPCancelledFunds,
       title: 'Over 70% of the cancelled award funding does not expire',
     },
-    'Spending-Left-For-Innovation': {
-      page: 'PR',
+    'SP-Left-For-Innovation': {
+      page: 'Projects',
       Component: SpendingLeftForInnovation,
       title:
         'Total budgetary resources, science and energy innovation programs (excluding Loan Programs Office), 2017-2026',
@@ -114,8 +118,13 @@
           {@render optionItem(slug, title)}
         {/each}
       </optgroup>
-      <optgroup label="Other page">
-        {#each Object.entries(slugs).filter(([, { page }]) => page === 'PR') as [slug, { title }] (slug)}
+      <optgroup label="Projects page">
+        {#each Object.entries(slugs).filter(([, { page }]) => page === 'Projects') as [slug, { title }] (slug)}
+          {@render optionItem(slug, title)}
+        {/each}
+      </optgroup>
+      <optgroup label="People page">
+        {#each Object.entries(slugs).filter(([, { page }]) => page === 'People') as [slug, { title }] (slug)}
           {@render optionItem(slug, title)}
         {/each}
       </optgroup>
@@ -129,8 +138,7 @@
       <h2>{title}</h2>
       <div class="flex items-center gap-2 bg-amber-100 p-2">
         <span>Usage:</span>
-        <pre><code>&lt;svelte-app-web-component slug="{slug}">&lt;/svelte-app-web-component></code
-          ></pre>
+        <pre><code>&lt;efif-charts slug="{slug}">&lt;/efif-charts></code></pre>
       </div>
     {/if}
     <Component {chartHeader} />
