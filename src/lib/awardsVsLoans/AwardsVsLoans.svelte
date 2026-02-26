@@ -76,6 +76,7 @@
     display: grid;
     gap: calc(var(--spacing) * 4);
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    max-width: 60rem;
   }
 
   .chart {

@@ -88,7 +88,7 @@
       title: 'Over 70% of the cancelled award funding does not expire',
     },
     'SP-Left-For-Innovation': {
-      page: 'Projects',
+      page: 'Spending',
       Component: SpendingLeftForInnovation,
       title:
         'Total budgetary resources, science and energy innovation programs (excluding Loan Programs Office), 2017-2026',
@@ -103,35 +103,35 @@
 </script>
 
 <svelte:element this={'style'}>{styles}</svelte:element>
+<main class="flex flex-col justify-center gap-3">
+  {#if displayPicker}
+    <div class="select-container">
+      <select bind:value={slug} class="border">
+        <option disabled>Select a chart</option>
+        <optgroup label="Home page">
+          {#each Object.entries(slugs).filter(([, { page }]) => page === 'Home') as [slug, { title }] (slug)}
+            {@render optionItem(slug, title)}
+          {/each}
+        </optgroup>
+        <optgroup label="Spending page">
+          {#each Object.entries(slugs).filter(([, { page }]) => page === 'Spending') as [slug, { title }] (slug)}
+            {@render optionItem(slug, title)}
+          {/each}
+        </optgroup>
+        <optgroup label="Projects page">
+          {#each Object.entries(slugs).filter(([, { page }]) => page === 'Projects') as [slug, { title }] (slug)}
+            {@render optionItem(slug, title)}
+          {/each}
+        </optgroup>
+        <optgroup label="People page">
+          {#each Object.entries(slugs).filter(([, { page }]) => page === 'People') as [slug, { title }] (slug)}
+            {@render optionItem(slug, title)}
+          {/each}
+        </optgroup>
+      </select>
+    </div>
+  {/if}
 
-{#if displayPicker}
-  <div class="select-container">
-    <select bind:value={slug} class="border">
-      <option disabled>Select a chart</option>
-      <optgroup label="Home page">
-        {#each Object.entries(slugs).filter(([, { page }]) => page === 'Home') as [slug, { title }] (slug)}
-          {@render optionItem(slug, title)}
-        {/each}
-      </optgroup>
-      <optgroup label="Spending page">
-        {#each Object.entries(slugs).filter(([, { page }]) => page === 'Spending') as [slug, { title }] (slug)}
-          {@render optionItem(slug, title)}
-        {/each}
-      </optgroup>
-      <optgroup label="Projects page">
-        {#each Object.entries(slugs).filter(([, { page }]) => page === 'Projects') as [slug, { title }] (slug)}
-          {@render optionItem(slug, title)}
-        {/each}
-      </optgroup>
-      <optgroup label="People page">
-        {#each Object.entries(slugs).filter(([, { page }]) => page === 'People') as [slug, { title }] (slug)}
-          {@render optionItem(slug, title)}
-        {/each}
-      </optgroup>
-    </select>
-  </div>
-{/if}
-<main class="flex flex-col gap-3">
   {#if activeComponent}
     {@const { Component, title } = activeComponent}
     {#if displayPicker}

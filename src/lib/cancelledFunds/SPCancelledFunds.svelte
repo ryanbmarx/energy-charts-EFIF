@@ -95,6 +95,8 @@
     gap: calc(var(--spacing) * 6);
     flex-wrap: wrap;
     align-items: center;
+    max-width: 55rem;
+    margin: 0 auto;
   }
   .legend {
     flex: 1 1 fit-content;
