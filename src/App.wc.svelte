@@ -1,6 +1,7 @@
-<svelte:options customElement="svelte-app-web-component" />
+<svelte:options customElement="efif-charts" />
 
 <script lang="ts">
+  import SpendingLeftForInnovation from './SpendingLeftForInnovation.svelte';
   import StaffingCuts from '$lib/StaffingCuts.svelte';
   import HistoricalStaffingChanges from '$lib//HistoricalStaffingChanges.svelte';
   import ResourcesRatio from '$lib//ResourcesRatio.svelte';
@@ -67,11 +68,19 @@
       Component: SPCancelledFunds,
       title: 'Over 70% of the cancelled award funding does not expire',
     },
+    'Spending-Left-For-Innovation': {
+      page: 'PR',
+      Component: SpendingLeftForInnovation,
+      title:
+        'Total budgetary resources, science and energy innovation programs (excluding Loan Programs Office), 2017-2026',
+    },
   };
 
-  let { slug, picker = false }: { slug?: string; picker?: boolean } = $props();
+  let { slug = 'SpendingLeftForInnovation', picker = false }: { slug?: string; picker?: boolean } =
+    $props();
 
   const displayPicker = $derived(Boolean(picker));
+  const activeComponent = $derived(slugs[slug]);
 </script>
 
 <svelte:element this={'style'}>{styles}</svelte:element>
@@ -81,44 +90,36 @@
     <select bind:value={slug} class="border">
       <option disabled>Select a chart</option>
       <optgroup label="Home page">
-        {#each Object.entries(slugs).filter(([_, { page }]) => page === 'Home') as [slug, { title }] (slug)}
+        {#each Object.entries(slugs).filter(([, { page }]) => page === 'Home') as [slug, { title }] (slug)}
           {@render optionItem(slug, title)}
         {/each}
       </optgroup>
       <optgroup label="Spending page">
-        {#each Object.entries(slugs).filter(([_, { page }]) => page === 'Spending') as [slug, { title }] (slug)}
+        {#each Object.entries(slugs).filter(([, { page }]) => page === 'Spending') as [slug, { title }] (slug)}
           {@render optionItem(slug, title)}
         {/each}
       </optgroup>
       <optgroup label="Other page">
-        {#each Object.entries(slugs).filter(([_, { page }]) => page === 'PR') as [slug, { title }] (slug)}
+        {#each Object.entries(slugs).filter(([, { page }]) => page === 'PR') as [slug, { title }] (slug)}
           {@render optionItem(slug, title)}
         {/each}
       </optgroup>
     </select>
   </div>
 {/if}
-
 <main class="flex flex-col gap-3">
-  {#if slug && slugs[slug]}
-    {@const { Component, title } = slugs[slug]}
-    <h2>{title}</h2>
-    <div class="flex items-center gap-2 bg-amber-100 p-2">
-      <span>Usage:</span>
-      <pre><code>&lt;svelte-app-web-component slug="{slug}">&lt;/svelte-app-web-component></code
-        ></pre>
-    </div>
+  {#if activeComponent}
+    {@const { Component, title } = activeComponent}
+    {#if displayPicker}
+      <h2>{title}</h2>
+      <div class="flex items-center gap-2 bg-amber-100 p-2">
+        <span>Usage:</span>
+        <pre><code>&lt;svelte-app-web-component slug="{slug}">&lt;/svelte-app-web-component></code
+          ></pre>
+      </div>
+    {/if}
     <Component {chartHeader} />
   {/if}
-  <!-- <h2>Staffing</h2>
-  <ChartStaffing {chartHeader} />
-  
-  
-  <h2>Congress passed DOE spending that supports nuclear and grid efforts</h2>
-  <BudgetProposalComparisons></BudgetProposalComparisons>
-
-
-  -->
 </main>
 
 {#snippet chartHeader({ header = '', description = '', label = '' })}
