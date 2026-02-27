@@ -48,11 +48,12 @@
   --light-green-1: #abcbca;
   --light-green-2: #dbe8e8;
   --gray: #575d6a;
-  --red: #f1572d;
+  --red: #8c2e0d;
   --blue: #0e4c82;
   --middle-blue: #3199bb;
   --dark-blue: #0e4c82;
   --transparent: #fff0;
+  --orange: #f1572e;
 }
 
 .dark {

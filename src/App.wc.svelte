@@ -4,6 +4,8 @@
     shadow: 'open',
     props: {
       data: { attribute: 'data', reflect: true },
+      slug: { attribute: 'slug', reflect: true },
+      picker: { attribute: 'picker', reflect: true, type: 'Boolean' },
     },
   }}
 />
