@@ -2,6 +2,7 @@
   import { BarChart } from 'layerchart';
   import { grants, loans, planned } from './cancelledVsFunded';
   import * as Select from '$lib/components/ui/select/index.js';
+  import { formatMoney } from '@/utils/format-money';
 
   // highlight: name of the selected segment, or undefined for no highlight
   function makeSeries(d: typeof grants, highlight: string | undefined) {
@@ -26,10 +27,6 @@
       }));
   }
 
-  function formatBillions(v: number) {
-    return v === 0 ? '' : `$${(v / 1_000_000_000).toFixed(1)}B`;
-  }
-
   let selectedSegment = $state<string | undefined>();
 
   // Re-derives whenever selectedSegment changes to update highlight colors
@@ -37,23 +34,23 @@
     {
       data: [{ id: 'grants' }],
       series: makeSeries(grants, selectedSegment),
-      title: 'Grant title',
-      totalPositive: '$XB',
-      totalNegative: '-$XB',
+      title: 'Grants',
+      totalPositiveValue: grants.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
+      totalNegativeValue: grants.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
     },
     {
       data: [{ id: 'loans' }],
       series: makeSeries(loans, selectedSegment),
-      title: 'Loans title',
-      totalPositive: '$XB',
-      totalNegative: '-$XB',
+      title: 'Loans',
+      totalPositiveValue: loans.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
+      totalNegativeValue: loans.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
     },
     {
       data: [{ id: 'planned' }],
       series: makeSeries(planned, selectedSegment),
-      title: 'Planned title',
-      totalPositive: '$XB',
-      totalNegative: '-$XB',
+      title: 'Planned spending',
+      totalPositiveValue: planned.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
+      totalNegativeValue: planned.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
     },
   ]);
   const segments = $derived.by(() => {
@@ -69,7 +66,7 @@
 
   function getHighlightValue(data: typeof grants) {
     const highlightFigure = data.find((s) => s.name === selectedSegmentLabel)?.value;
-    return highlightFigure ? formatBillions(highlightFigure) : '–';
+    return highlightFigure ? formatMoney(highlightFigure) : '–';
   }
 </script>
 
@@ -89,11 +86,9 @@
   </ul>
 </div>
 <div class="chart-container">
-  {#each charts as { data, series, title, totalPositive, totalNegative } (title)}
+  {#each charts as { data, series, title, totalPositiveValue, totalNegativeValue } (title)}
     <div class="chart" data-title={title}>
-      <span class="text-center text-lg leading-none uppercase">{title}</span>
-      <span class="mb-2 text-center text-sm leading-none font-bold">{totalPositive}</span>
-      <span class="mb-2 text-center text-sm leading-none font-bold">{totalNegative}</span>
+      <span class="mb-4 text-center text-lg leading-none uppercase">{title}</span>
 
       <BarChart
         {data}
@@ -101,17 +96,39 @@
         {series}
         seriesLayout="stackDiverging"
         yDomain={[-12_000_000_000, 4_000_000_000]}
+        padding={{ left: 52, top: 20, right: 8, bottom: 20 }}
         tooltip={false}
         props={{
           bars: { rounded: 'none' },
           xAxis: { ticks: [] },
           yAxis: {
-            format: formatBillions,
+            format: formatMoney,
             classes: { tickLabel: 'font-bold text-muted-foreground' },
           },
         }}
         renderContext="svg"
-      />
+      >
+        {#snippet aboveMarks({ context })}
+          {#if totalPositiveValue > 0}
+            <text
+              x={context.width / 2}
+              y={context.yScale(totalPositiveValue) - 4}
+              text-anchor="middle"
+              font-weight="bold"
+              font-size="12">{formatMoney(totalPositiveValue)}</text
+            >
+          {/if}
+          {#if totalNegativeValue < 0}
+            <text
+              x={context.width / 2}
+              y={context.yScale(totalNegativeValue) + 14}
+              text-anchor="middle"
+              font-weight="bold"
+              font-size="12">{formatMoney(totalNegativeValue)}</text
+            >
+          {/if}
+        {/snippet}
+      </BarChart>
     </div>
   {/each}
 </div>

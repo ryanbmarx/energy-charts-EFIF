@@ -1,5 +1,6 @@
 <script lang="ts">
   import { BarChart, Tooltip } from 'layerchart';
+  import { formatMoney } from '@/utils/format-money';
 
   type Entry = {
     year: number;
@@ -39,7 +40,7 @@
       },
       xAxis: { format: 'none', classes: { tickLabel: 'text-muted-foreground font-bold' } },
       yAxis: {
-        format: (v: number) => (v === 0 ? '' : `$${(v / 1_000_000_000).toFixed(1)}B`),
+        format: formatMoney,
         classes: { tickLabel: 'font-bold text-muted-foreground ' },
       },
     }}
@@ -51,9 +52,9 @@
     {#snippet tooltip({ context })}
       <Tooltip.Root {context}>
         {#snippet children({ data })}
-          <p>{data.year}: <b>${(data.totalBudgetaryResources / 1_000_000_000).toFixed(1)}B</b></p>
+          <p>{data.year}: <b>{formatMoney(data.totalBudgetaryResources)}</b></p>
           {#if (data.obbbaRescissions ?? 0) > 0}
-            <p>Rescissions: <b>${((data.obbbaRescissions ?? 0) / 1_000_000_000).toFixed(1)}B</b></p>
+            <p>Rescissions: <b>{formatMoney(data.obbbaRescissions ?? 0)}</b></p>
           {/if}
         {/snippet}
       </Tooltip.Root>

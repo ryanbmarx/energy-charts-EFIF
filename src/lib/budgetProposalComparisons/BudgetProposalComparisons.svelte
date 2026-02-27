@@ -1,21 +1,10 @@
 <script lang="ts">
   import VerticalSwitch from './VerticalSwitch.svelte';
   import { segments } from './budgetProposalData';
+  import { formatMoney } from '@/utils/format-money';
 
   type Segment = (typeof segments)[number];
   type HoveredDot = { segment: Segment; budget: 'wh' | 'cong' };
-
-  // d3-format uses G for 10^9, not B — simpler to roll our own
-  function formatMoney(v: number): string {
-    function withSuffix(n: number, suffix: string): string {
-      const two = n.toFixed(2);
-      // drop one trailing zero (.00 → .0, .10 → .1) but keep at least one decimal
-      return `$${two.endsWith('0') ? n.toFixed(1) : two}${suffix}`;
-    }
-    if (Math.abs(v) >= 1e9) return withSuffix(v / 1e9, 'B');
-    if (Math.abs(v) >= 1e6) return withSuffix(v / 1e6, 'M');
-    return withSuffix(v / 1e3, 'K');
-  }
 
   let highlightCongress = $state(false);
   let tooltipVisible = $state(false);
