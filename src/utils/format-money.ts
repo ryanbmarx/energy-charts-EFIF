@@ -13,3 +13,18 @@ export function formatMoney(v: number): string {
   if (Math.abs(v) >= 1e6) return withSuffix(v / 1e6, 'M');
   return withSuffix(v / 1e3, 'K');
 }
+export function formatMoney2(v: number) {
+  const isNegative = v < 0;
+  const absV = Math.abs(v);
+  if (absV >= 1_000_000_000) {
+    return `${isNegative ? '-' : ''}$${(absV / 1_000_000_000).toFixed(2)}B`;
+  }
+  if (absV >= 1_000_000) {
+    return `${isNegative ? '-' : ''}$${(absV / 1_000_000).toFixed(1)}M`;
+  }
+  if (absV >= 1_000) {
+    return `${isNegative ? '-' : ''}$${(absV / 1_000).toFixed(1)}K`;
+  }
+
+  return v.toLocaleString();
+}

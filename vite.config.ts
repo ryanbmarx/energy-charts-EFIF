@@ -1,6 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
+/// <reference types="vitest" />
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -11,6 +12,9 @@ export default defineConfig({
       '@': '/src',
       $lib: '/src/lib',
     },
+  },
+  test: {
+    include: ['src/**/*.test.ts'],
   },
   build: {
     outDir: './build',
