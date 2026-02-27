@@ -149,7 +149,6 @@
 }
 
 .chart-container {
-  outline: 1px solid red;
   position: relative;
   overflow: hidden;
   width: 100%;
