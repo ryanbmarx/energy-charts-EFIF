@@ -34,7 +34,7 @@
   }
 </script>
 
-<div class="chart">
+<div class="chart-container">
   <BarChart
     {data}
     {props}
@@ -44,6 +44,7 @@
     cDomain={['positive', 'negative']}
     cRange={['var(--middle-green)', 'var(--red)']}
     renderContext="svg"
+    padding={{ left: 30, bottom: 20, top: 20 }}
   >
     {#snippet tooltip({ context })}
       <Tooltip.Root {context} class="max-w-33">
@@ -56,8 +57,8 @@
 </div>
 
 <style lang="postcss">
-  .chart {
-    width: 100%;
+  .chart-container {
     aspect-ratio: 16 / 9;
+    max-width: 60rem;
   }
 </style>

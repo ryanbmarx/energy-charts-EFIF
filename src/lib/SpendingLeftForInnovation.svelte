@@ -48,6 +48,7 @@
     x="year"
     seriesLayout="stack"
     renderContext="svg"
+    padding={{ left: 42, top: 20 }}
   >
     {#snippet tooltip({ context })}
       <Tooltip.Root {context}>
@@ -64,7 +65,7 @@
 
 <style lang="postcss">
   .chart-container {
-    width: 100%;
+    max-width: 60rem;
     aspect-ratio: 16 / 9;
   }
 </style>

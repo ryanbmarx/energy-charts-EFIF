@@ -12,18 +12,6 @@
       return { key, color };
     });
   });
-
-  /*
-  export const orgs = {
-  OEERE: 'Office of Energy Efficiency and Renewable Energy, Etc.',
-  OFECM: 'Office of Fossil Energy and Carbon Management',
-  GDOOE: 'Grid Deployment Office and Office of Electricity',
-  ONE: 'Office of Nuclear Energy',
-  OCED: 'Office of Clean Energy Demonstrations',
-  other: 'Other innovation',
-  OOS: 'Office of science',
-} as const;
-  */
 </script>
 
 <div class="container">

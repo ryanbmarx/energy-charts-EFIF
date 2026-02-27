@@ -18,7 +18,7 @@
   ];
 </script>
 
-<div class="chart">
+<div class="chart-container">
   <BarChart
     {data}
     props={{
@@ -34,6 +34,7 @@
         classes: { tickLabel: 'font-bold text-muted-foreground' },
       },
     }}
+    padding={{ left: 25, top: 20, right: 0, bottom: 20 }}
     x="year"
     y="value"
     renderContext="svg"
@@ -49,7 +50,7 @@
 </div>
 
 <style lang="postcss">
-  .chart {
+  .chart-container {
     width: 100%;
     aspect-ratio: 16 / 9;
     max-width: 60rem;

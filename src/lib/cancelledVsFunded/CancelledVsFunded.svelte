@@ -96,7 +96,7 @@
         {series}
         seriesLayout="stackDiverging"
         yDomain={[-12_000_000_000, 4_000_000_000]}
-        padding={{ left: 52, top: 20, right: 8, bottom: 20 }}
+        padding={{ left: 35, top: 20, right: 8, bottom: 20 }}
         tooltip={false}
         props={{
           bars: { rounded: 'none' },

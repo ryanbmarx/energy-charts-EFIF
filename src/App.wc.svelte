@@ -11,6 +11,7 @@
 />
 
 <script lang="ts">
+  import * as Select from '@/lib/components/ui/select';
   import SpendingLeftForInnovation from './lib/SpendingLeftForInnovation.svelte';
   import StaffingCuts from '$lib/StaffingCuts.svelte';
   import HistoricalStaffingChanges from '$lib//HistoricalStaffingChanges.svelte';
@@ -24,6 +25,7 @@
   import CancelledVsFunded from './lib/cancelledVsFunded/CancelledVsFunded.svelte';
   import styles from '@/app.css?inline';
   import type { Component } from 'svelte';
+  import { onMount } from 'svelte';
   import StaffingCutsSmall from './lib/StaffingCutsSmall.svelte';
 
   type Chart = {
@@ -102,35 +104,66 @@
 
   const displayPicker = $derived(Boolean(picker));
   const activeComponent = $derived(slugs[slug]);
+  const dropdownLabel = $derived(slug || 'Select a chart');
+
+  const slugKeys = Object.keys(slugs);
+
+  onMount(() => {
+    if (!picker) return;
+    // Restore slug from previous session in picker/preview mode
+    const saved = sessionStorage.getItem('efif-charts-slug');
+    if (saved && slugs[saved]) slug = saved;
+    window.addEventListener('keydown', handleKeydown);
+    return () => window.removeEventListener('keydown', handleKeydown);
+  });
+
+  $effect(() => {
+    if (!picker) return;
+    sessionStorage.setItem('efif-charts-slug', slug);
+  });
+
+  function handleKeydown(e: KeyboardEvent) {
+    const current = slugKeys.indexOf(slug);
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault();
+
+        slug = slugKeys[(current - 1 + slugKeys.length) % slugKeys.length];
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        slug = slugKeys[(current + 1 + slugKeys.length) % slugKeys.length];
+        break;
+    }
+  }
 </script>
 
 <svelte:element this={'style'}>{styles}</svelte:element>
 <main class="flex flex-col justify-center gap-3">
   {#if displayPicker}
     <div class="select-container">
-      <select bind:value={slug} class="border">
-        <option disabled>Select a chart</option>
-        <optgroup label="Home page">
+      <Select.Root bind:value={slug} type="single">
+        <Select.Trigger>{dropdownLabel}</Select.Trigger>
+        <Select.Content>
+          <Select.Label>Home page</Select.Label>
           {#each Object.entries(slugs).filter(([, { page }]) => page === 'Home') as [slug, { title }] (slug)}
             {@render optionItem(slug, title)}
           {/each}
-        </optgroup>
-        <optgroup label="Spending page">
+          <Select.Label>Spending page</Select.Label>
           {#each Object.entries(slugs).filter(([, { page }]) => page === 'Spending') as [slug, { title }] (slug)}
             {@render optionItem(slug, title)}
           {/each}
-        </optgroup>
-        <optgroup label="Projects page">
+          <Select.Label>Projects page</Select.Label>
           {#each Object.entries(slugs).filter(([, { page }]) => page === 'Projects') as [slug, { title }] (slug)}
             {@render optionItem(slug, title)}
           {/each}
-        </optgroup>
-        <optgroup label="People page">
+          <Select.Label>People page</Select.Label>
           {#each Object.entries(slugs).filter(([, { page }]) => page === 'People') as [slug, { title }] (slug)}
             {@render optionItem(slug, title)}
           {/each}
-        </optgroup>
-      </select>
+        </Select.Content>
+      </Select.Root>
     </div>
   {/if}
 
@@ -161,7 +194,7 @@
   {/if}
 {/snippet}
 {#snippet optionItem(slug = '', title = '')}
-  <option value={slug}>{title}</option>
+  <Select.Item value={slug}>{title}</Select.Item>
 {/snippet}
 
 <style lang="postcss">

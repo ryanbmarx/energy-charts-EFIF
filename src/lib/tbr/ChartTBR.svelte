@@ -105,6 +105,7 @@
       x="year"
       y="value"
       renderContext="svg"
+      padding={{ left: 30, top: 10 }}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context} class="max-w-33">
@@ -145,6 +146,7 @@
       y="value"
       yDomain={[0, 100]}
       renderContext="svg"
+      padding={{ left: 35, top: 10, right: 10 }}
     >
       {#snippet tooltip({ context })}
         <Tooltip.Root {context} class="max-w-33">

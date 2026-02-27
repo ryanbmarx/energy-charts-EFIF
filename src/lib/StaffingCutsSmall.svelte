@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PieChart, Arc } from 'layerchart';
 
-  type StaffingRow = { office: string; fte2024: number; cuts2026: number };
+  type StaffingRow = { office: string; fte2024: number; cuts2026: number; change: number };
 
   const offices: StaffingRow[] = $derived.by(() => {
     return [
