@@ -1,7 +1,12 @@
 <script lang="ts">
-  import { PieChart, Arc } from 'layerchart';
+  import { PieChart, Arc, Tooltip } from 'layerchart';
 
   type StaffingRow = { office: string; fte2024: number; cuts2026: number; change: number };
+
+  const dataSeriesForHumans: Record<string, string> = {
+    fte2024: '2024 FTEs',
+    cuts2026: 'Proposed 2026 reductions',
+  };
 
   const offices: StaffingRow[] = $derived.by(() => {
     return [
@@ -47,11 +52,17 @@
             },
           }}
           innerRadius={0}
-          tooltip={false}
           {data}
           renderContext="svg"
           {cRange}
         >
+          {#snippet tooltip({ context })}
+            <Tooltip.Root {context}>
+              {#snippet children({ data })}
+                {dataSeriesForHumans[data.key]}: <b>{data.value}</b>
+              {/snippet}
+            </Tooltip.Root>
+          {/snippet}
           {#snippet arc({ props, index })}
             <Arc
               {...props}

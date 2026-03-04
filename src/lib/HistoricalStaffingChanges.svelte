@@ -32,6 +32,9 @@
   function barColor(d: { value: number }) {
     return d.value >= 0 ? 'positive' : 'negative';
   }
+
+  // outside-bar labels with locale commas (e.g. 1,179 / -3,050)
+  const labelFormat = (v: number) => v.toLocaleString('en-US');
 </script>
 
 <div class="chart-container">
@@ -43,13 +46,14 @@
     c={barColor}
     cDomain={['positive', 'negative']}
     cRange={['var(--middle-green)', 'var(--red)']}
+    labels={{ format: labelFormat, style: 'font-weight: bold; font-size: .75rem;' }}
     renderContext="svg"
-    padding={{ left: 30, bottom: 20, top: 20 }}
+    padding={{ left: 30, bottom: 30, top: 30 }}
   >
     {#snippet tooltip({ context })}
       <Tooltip.Root {context} class="max-w-33">
         {#snippet children({ data })}
-          {data.year}: <b>{data.value}</b>
+          {data.year}: <b>{labelFormat(data.value)}</b>
         {/snippet}
       </Tooltip.Root>
     {/snippet}

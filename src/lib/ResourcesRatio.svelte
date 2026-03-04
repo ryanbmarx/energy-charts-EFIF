@@ -34,11 +34,30 @@
         classes: { tickLabel: 'font-bold text-muted-foreground' },
       },
     }}
-    padding={{ left: 25, top: 20, right: 0, bottom: 20 }}
+    padding={{ left: 25, top: 30, right: 0, bottom: 20 }}
     x="year"
     y="value"
     renderContext="svg"
   >
+    {#snippet aboveMarks({ context })}
+      {#if context.containerWidth >= 500}
+        {@const narrow = context.containerWidth < 800}
+        {#each data as entry (entry.year)}
+          {@const y = narrow ? context.yScale(entry.value) - 4 : context.yScale(entry.value) + 12}
+          <!-- Label above each bar; pointer-events off to preserve tooltip hover -->
+          <text
+            {y}
+            x={(context.xScale(entry.year) ?? 0) + (context.xScale.bandwidth?.() ?? 0) / 2}
+            text-anchor="middle"
+            dominant-baseline="auto"
+            font-size="11"
+            font-weight="bold"
+            fill={narrow ? 'black' : 'white'}
+            pointer-events="none">{entry.value}x</text
+          >
+        {/each}
+      {/if}
+    {/snippet}
     {#snippet tooltip({ context })}
       <Tooltip.Root {context} class="max-w-33">
         {#snippet children({ data })}
