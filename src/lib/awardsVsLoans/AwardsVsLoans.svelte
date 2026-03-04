@@ -25,8 +25,8 @@
   };
 </script>
 
-<div class="charts">
-  <figure class="chart-container">
+<div class="chart-container">
+  <figure class="chart">
     {@render title('DOE award selections')}
     {@render subtitle('1/20/25-1/20/26')}
     <div class="chart">
@@ -67,7 +67,7 @@
       </table>
     </figcaption>
   </figure>
-  <figure class="chart-container">
+  <figure class="chart">
     {@render title('DOE loans closed')}
     {@render subtitle('1/20/25-1/20/26')}
     <div class="chart">
@@ -119,7 +119,7 @@
 {/snippet}
 
 <style lang="postcss">
-  .charts {
+  .chart-container {
     display: grid;
     gap: calc(var(--spacing) * 8);
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
