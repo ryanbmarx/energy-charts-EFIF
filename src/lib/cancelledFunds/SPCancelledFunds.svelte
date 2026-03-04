@@ -80,7 +80,7 @@
       </div>
     {/each}
     <div class="border-t pt-4">
-      <dt>
+      <dt class="no-colon">
         <Swatch background="var(--dark-blue)"></Swatch>
         <span class="sr-only">Does not expire</span>
       </dt>
@@ -111,7 +111,7 @@
       display: inline;
     }
 
-    dt::after {
+    dt:not(.no-colon)::after {
       content: ':';
     }
 
