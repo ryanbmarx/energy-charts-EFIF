@@ -73,7 +73,11 @@
 <div class="controls" role="menubar">
   <Select.Root type="single" bind:value={selectedSegment}>
     <Select.Trigger class="min-w-4 flex-1 bg-white">{selectedSegmentLabel}</Select.Trigger>
-    <Select.Content>
+    <Select.Content
+      portalProps={{
+        disabled: true,
+      }}
+    >
       {#each segments as segment (segment)}
         <Select.Item value={segment}>{segment}</Select.Item>
       {/each}
