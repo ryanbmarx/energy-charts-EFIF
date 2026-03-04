@@ -48,14 +48,38 @@
     x="year"
     seriesLayout="stack"
     renderContext="svg"
-    padding={{ left: 42, top: 20 }}
+    padding={{ left: 42, top: 20, bottom: 40 }}
   >
+    {#snippet aboveMarks({ context })}
+      {#if context.containerWidth >= 500}
+        {@const narrow = context.containerWidth < 800}
+        {#each data as entry (entry.year)}
+          {@const y = narrow
+            ? context.yScale(entry.totalBudgetaryResources + (entry.obbbaRescissions ?? 0)) - 4
+            : context.yScale(entry.totalBudgetaryResources) + 4}
+
+          <!-- Label atop each totalBudgetaryResources bar; pointer-events off to preserve tooltip hover -->
+          <text
+            {y}
+            x={(context.xScale(entry.year) ?? 0) + (context.xScale.bandwidth?.() ?? 0) / 2}
+            text-anchor="middle"
+            dominant-baseline={narrow ? 'auto' : 'hanging'}
+            font-size="11"
+            font-weight="bold"
+            fill={narrow ? 'black' : 'white'}
+            pointer-events="none">{formatMoney(entry.totalBudgetaryResources, 1)}</text
+          >
+        {/each}
+      {/if}
+    {/snippet}
     {#snippet tooltip({ context })}
       <Tooltip.Root {context}>
         {#snippet children({ data })}
           <p>{data.year}: <b>{formatMoney(data.totalBudgetaryResources)}</b></p>
           {#if (data.obbbaRescissions ?? 0) > 0}
-            <p>Rescissions: <b>{formatMoney(data.obbbaRescissions ?? 0)}</b></p>
+            <p style:color="var(--red)">
+              Rescissions: <b>{formatMoney(data.obbbaRescissions ?? 0)}</b>
+            </p>
           {/if}
         {/snippet}
       </Tooltip.Root>
