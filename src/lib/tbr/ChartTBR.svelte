@@ -82,9 +82,10 @@
     }}
   >
     {@render chartHeader({
-      header: "DOE's budget for energy innovation is historically high ...",
-      label: 'Total budgetary resources (TBR)',
-      description: 'Lorem ipsum dolor sit amet consectetur',
+      header: "DOE's innovation budget is historically high",
+      label: 'Total budgetary resources (TBR) for science and energy innovation',
+      description:
+        "The passage of the Bipartisan Infrastructure Law (BIL, 2021) and Inflation Reduction Act (IRA, 2022) quadrupled DOE's available funding for science and energy innovation.",
     })}
     <BarChart
       bind:context={barContext}
@@ -126,9 +127,9 @@
   >
     {@render chartHeader({
       description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident fugit quis commodi',
+        "DOE's rate of obligation of funding has plummeted, falling to a historic low of 2% in 2025.",
       label: 'Percentage of TBR obligated',
-      header: "... yet the pace of DOE's implementation has not kept up.",
+      header: "Yet, the pace of DOE's spending has not kept up",
     })}
     <LineChart
       bind:context={lineContext}
@@ -164,6 +165,7 @@
     display: grid;
     gap: calc(var(--spacing) * 4);
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    min-height: 30rem;
   }
   .chart-wrapper {
     width: 100%;
