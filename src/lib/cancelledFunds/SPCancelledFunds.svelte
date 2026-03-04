@@ -65,7 +65,7 @@
         tooltip={false}
         cRange={totals.map((d) => `var(${d.color})`)}
       ></PieChart>
-      <BigNumber leadin="Total cancelled award funding:" stat="${totalCancelled}B"></BigNumber>
+      <BigNumber leadin="Total cancelled award funding:" stat="$11.08B"></BigNumber>
     </div>
   </div>
 
