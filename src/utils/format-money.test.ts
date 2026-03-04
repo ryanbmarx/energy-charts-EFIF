@@ -1,9 +1,9 @@
 import { describe, test, expect } from 'vitest';
-import { formatMoney2 } from './format-money';
+import { formatMoney } from './format-money';
 
 type Case = { label: string; input: number; expected: string };
 
-describe('formatMoney2', () => {
+describe('formatMoney', () => {
   describe('billions (>= 1e9)', () => {
     const cases: Case[] = [
       { label: 'positive: 1B', input: 1_000_000_000, expected: '$1.00B' },
@@ -13,7 +13,7 @@ describe('formatMoney2', () => {
 
     for (const { label, input, expected } of cases) {
       test(label, () => {
-        expect(formatMoney2(input)).toBe(expected);
+        expect(formatMoney(input)).toBe(expected);
       });
     }
   });
@@ -27,7 +27,7 @@ describe('formatMoney2', () => {
 
     for (const { label, input, expected } of cases) {
       test(label, () => {
-        expect(formatMoney2(input)).toBe(expected);
+        expect(formatMoney(input)).toBe(expected);
       });
     }
   });
@@ -41,7 +41,7 @@ describe('formatMoney2', () => {
 
     for (const { label, input, expected } of cases) {
       test(label, () => {
-        expect(formatMoney2(input)).toBe(expected);
+        expect(formatMoney(input)).toBe(expected);
       });
     }
   });
@@ -55,7 +55,7 @@ describe('formatMoney2', () => {
 
     for (const { label, input, expected } of cases) {
       test(label, () => {
-        expect(formatMoney2(input)).toBe(expected);
+        expect(formatMoney(input)).toBe(expected);
       });
     }
   });
