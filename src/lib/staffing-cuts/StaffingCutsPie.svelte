@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PieChart, Arc, Tooltip } from 'layerchart';
-  import Swatch from './components/Swatch.svelte';
   import type { Snippet } from 'svelte';
+  import type { StaffingRow } from './types';
 
   const dataSeriesForHumans: Record<string, string> = {
     fte2024: '2024 FTEs',
@@ -15,11 +15,8 @@
     maxValue,
     children,
     labelPie = false,
-  }: {
+  }: StaffingRow & {
     labelPie?: boolean;
-    office: string;
-    fte2024: number;
-    cuts2026: number;
     maxValue: number;
     children?: Snippet;
   } = $props();

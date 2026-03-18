@@ -1,11 +1,8 @@
 <script lang="ts">
   import StaffingCutsPie from './StaffingCutsPie.svelte';
-
-  import { PieChart, Arc, Tooltip } from 'layerchart';
-  import Swatch from './components/Swatch.svelte';
-  import Legend from './Legend.svelte';
-
-  type StaffingRow = { office: string; fte2024: number; cuts2026: number };
+  import Swatch from '../components/Swatch.svelte';
+  import Legend from '../Legend.svelte';
+  import type { StaffingRow } from './types';
 
   const dataSeriesForHumans: Record<string, string> = {
     fte2024: '2024 FTEs',

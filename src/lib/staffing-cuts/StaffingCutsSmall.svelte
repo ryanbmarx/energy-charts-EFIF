@@ -1,14 +1,7 @@
 <script lang="ts">
-  import { PieChart, Arc, Tooltip } from 'layerchart';
   import Legend from '../Legend.svelte';
-  import StaffingCutsPie from '../StaffingCutsPie.svelte';
-
-  type StaffingRow = { office: string; fte2024: number; cuts2026: number; change: number };
-
-  const dataSeriesForHumans: Record<string, string> = {
-    fte2024: '2024 FTEs',
-    cuts2026: 'Proposed 2026 reductions',
-  };
+  import StaffingCutsPie from './StaffingCutsPie.svelte';
+  import type { StaffingRow } from './types';
 
   const offices: StaffingRow[] = $derived.by(() => {
     return [
