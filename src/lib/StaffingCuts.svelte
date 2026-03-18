@@ -1,4 +1,6 @@
 <script lang="ts">
+  import StaffingCutsPie from './StaffingCutsPie.svelte';
+
   import { PieChart, Arc, Tooltip } from 'layerchart';
   import Swatch from './components/Swatch.svelte';
   import Legend from './Legend.svelte';
@@ -42,50 +44,7 @@
   />
   <div class="chart">
     {#each offices as { office, fte2024, cuts2026 } (office)}
-      {@const outerRadius = fte2024 / maxValue}
-      {@const data = [
-        { key: 'cuts2026', value: cuts2026, color: 'white', label: 'Proposed 2026 reductions' },
-        { key: 'fte2024', value: fte2024 - cuts2026, color: 'var(--blue)', label: '2024 FTEs' },
-      ]}
-      {@const cRange = data.map((d) => d.color)}
-
-      <div
-        class="office"
-        data-office={office}
-        data-fte2024={fte2024}
-        data-outerRadius={outerRadius}
-      >
-        <p class="text-center text-sm font-bold text-balance">{office}</p>
-        <div class="pie">
-          <PieChart
-            {outerRadius}
-            props={{
-              pie: {
-                sort: null,
-              },
-            }}
-            innerRadius={0}
-            {data}
-            renderContext="svg"
-            {cRange}
-          >
-            {#snippet tooltip({ context })}
-              <Tooltip.Root {context}>
-                {#snippet children({ data })}
-                  {dataSeriesForHumans[data.key]}: <b>{data.value}</b>
-                {/snippet}
-              </Tooltip.Root>
-            {/snippet}
-            {#snippet arc({ props, index })}
-              <Arc
-                {...props}
-                stroke={index === 0 ? 'var(--blue)' : 'none'}
-                stroke-dasharray={index === 0 ? '4 3' : undefined}
-                stroke-width={index === 0 ? 2 : undefined}
-              />
-            {/snippet}
-          </PieChart>
-        </div>
+      <StaffingCutsPie {office} {fte2024} {cuts2026} {maxValue} labelPie>
         <dl>
           <dt class="flex items-center gap-2">
             <Swatch background="var(--blue)"></Swatch>
@@ -98,7 +57,7 @@
           </dt>
           <dd>{cuts2026}</dd>
         </dl>
-      </div>
+      </StaffingCutsPie>
     {/each}
   </div>
 </div>
@@ -109,20 +68,6 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: calc(var(--spacing) * 4);
   }
-
-  .office {
-    padding: calc(var(--spacing) * 4);
-    display: grid;
-    grid-row: span 3;
-    grid-template-rows: subgrid;
-    background-color: #eee;
-  }
-
-  .pie {
-    width: 100%;
-    aspect-ratio: 1/1;
-  }
-
   dl {
     display: grid;
     grid-template: auto auto / max-content minmax(1px, 1fr);
