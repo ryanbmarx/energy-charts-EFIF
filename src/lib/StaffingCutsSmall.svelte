@@ -1,5 +1,6 @@
 <script lang="ts">
   import { PieChart, Arc, Tooltip } from 'layerchart';
+  import Legend from './Legend.svelte';
 
   type StaffingRow = { office: string; fte2024: number; cuts2026: number; change: number };
 
@@ -32,55 +33,69 @@
   });
 </script>
 
-<div class="chart">
-  {#each offices as { office, fte2024, cuts2026, change } (office)}
-    {@const outerRadius = (fte2024 + cuts2026) / maxValue}
-    {@const data = [
-      { key: 'cuts2026', value: cuts2026, color: 'white' },
-      { key: 'fte2024', value: fte2024, color: 'var(--blue)' },
+<div class="chart-wrapper">
+  <Legend
+    class="mb-2"
+    items={[
+      { color: 'white', label: 'Proposed 2026 reductions', borderColor: '#aaa' },
+      { color: 'var(--blue)', label: '2024 FTEs' },
     ]}
-    {@const cRange = data.map((d) => d.color)}
+  />
+  <div class="chart">
+    {#each offices as { office, fte2024, cuts2026, change } (office)}
+      {@const outerRadius = fte2024 / maxValue}
+      {@const data = [
+        { key: 'cuts2026', value: cuts2026, color: 'white' },
+        { key: 'fte2024', value: fte2024 - cuts2026, color: 'var(--blue)' },
+      ]}
+      {@const cRange = data.map((d) => d.color)}
 
-    <div class="office" data-office={office} data-fte2024={fte2024} data-outerRadius={outerRadius}>
-      <p class="text-center text-sm font-bold text-balance">{office}</p>
-      <div class="pie">
-        <PieChart
-          {outerRadius}
-          props={{
-            pie: {
-              sort: null,
-            },
-          }}
-          innerRadius={0}
-          {data}
-          renderContext="svg"
-          {cRange}
-        >
-          {#snippet tooltip({ context })}
-            <Tooltip.Root {context}>
-              {#snippet children({ data })}
-                {dataSeriesForHumans[data.key]}: <b>{data.value}</b>
-              {/snippet}
-            </Tooltip.Root>
-          {/snippet}
-          {#snippet arc({ props, index })}
-            <Arc
-              {...props}
-              stroke={index === 0 ? 'var(--blue)' : 'none'}
-              stroke-dasharray={index === 0 ? '4 3' : undefined}
-              stroke-width={index === 0 ? 2 : undefined}
-            />
-          {/snippet}
-        </PieChart>
+      <div
+        class="office"
+        data-office={office}
+        data-fte2024={fte2024}
+        data-outerRadius={outerRadius}
+      >
+        <p class="text-center text-sm font-bold text-balance">{office}</p>
+        <div class="pie">
+          <PieChart
+            {outerRadius}
+            props={{
+              pie: {
+                sort: null,
+              },
+            }}
+            innerRadius={0}
+            {data}
+            renderContext="svg"
+            {cRange}
+          >
+            {#snippet tooltip({ context })}
+              <Tooltip.Root {context}>
+                {#snippet children({ data })}
+                  {dataSeriesForHumans[data.key]}: <b>{data.value}</b>
+                {/snippet}
+              </Tooltip.Root>
+            {/snippet}
+            {#snippet arc({ props, index })}
+              <Arc
+                {...props}
+                stroke={index === 0 ? 'var(--blue)' : 'none'}
+                stroke-dasharray={index === 0 ? '4 3' : undefined}
+                stroke-width={index === 0 ? 2 : undefined}
+              />
+            {/snippet}
+          </PieChart>
+        </div>
+        <dl>
+          <dt class="">Proposed staff reductions:</dt>
+          <dd>{cuts2026}</dd>
+          <dt class="">Change from 2024:</dt>
+          <dd>{change}%</dd>
+        </dl>
       </div>
-      <dl>
-        <dt class="">Proposed staff reductions:</dt>
-        <dd>{cuts2026}</dd>
-        <dt class="">Change from 2024:</dt>
-        <dd>{change}%</dd>
-      </dl>
-    </div>
-  {/each}
+    {/each}
+  </div>
 </div>
 
 <style lang="postcss">

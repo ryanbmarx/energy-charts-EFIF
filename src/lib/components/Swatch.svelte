@@ -5,13 +5,15 @@
     background,
     class: addClass = '',
     sizeInEm = 0.85,
-  }: { background: string; class?: string; sizeInEm?: number } = $props();
+    borderColor,
+  }: { background: string; class?: string; sizeInEm?: number; borderColor?: string } = $props();
 </script>
 
 <span
   role="presentation"
   class={cn('swatch', addClass)}
   style:background
+  style:border-color={borderColor || background}
   style:--size="{sizeInEm}em"
 >
 </span>
