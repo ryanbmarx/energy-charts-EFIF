@@ -20,8 +20,6 @@
       { name: 'expires', amount: expires, color: '--transparent' },
     ];
   });
-
-  const totalCancelled = $derived(data.reduce((acc, { amount }) => (acc += amount), 0));
 </script>
 
 <div class="container">
