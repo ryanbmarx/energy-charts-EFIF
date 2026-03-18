@@ -45,10 +45,6 @@
       calloutDx: -40,
     },
   ];
-
-  const CALLOUT_W = 200;
-  const CALLOUT_H = 80;
-  const LINE_LEN = 20;
 </script>
 
 <div class="chart-container">
@@ -59,7 +55,6 @@
         class: 'stroke-none [fill:var(--middle-green)]',
         rounded: 'none',
       },
-      highlight: { bar: { class: 'fill-bar-highlight' } },
       xAxis: { classes: { tickLabel: 'font-bold text-muted-foreground' } },
       yAxis: {
         ticks: [0, 10, 20, 30, 40],

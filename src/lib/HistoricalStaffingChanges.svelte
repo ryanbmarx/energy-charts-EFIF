@@ -20,7 +20,6 @@
       class: 'stroke-none',
       rounded: 'none' as const,
     },
-    highlight: { bar: { class: 'fill-bar-highlight' } },
     xAxis: { classes: { tickLabel: 'font-bold text-muted-foreground' } },
     yAxis: {
       format: (v: number) => (v === 0 ? '' : `${(v / 1000).toFixed(1)}k`),
