@@ -21,7 +21,7 @@
     {#each items as { label, color, borderColor, isLine = false } (label)}
       <div class="legend-divider">
         <dt><Swatch background={color} {borderColor} /></dt>
-        <dd>{label}</dd>
+        <dd class="font-bold">{label}</dd>
       </div>
     {/each}
   </dl>

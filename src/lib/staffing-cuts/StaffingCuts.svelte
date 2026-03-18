@@ -67,7 +67,11 @@
   }
   dl {
     display: grid;
-    grid-template: auto auto / max-content minmax(1px, 1fr);
+    grid-template: auto auto / minmax(1px, 1fr) max-content;
     gap: 0 calc(4 * var(--spacing));
+  }
+
+  dd {
+    text-align: right;
   }
 </style>

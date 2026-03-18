@@ -10,15 +10,13 @@
         office: 'Office of Fossil Energy and Carbon Management',
         fte2024: 573,
         cuts2026: 108,
-        change: -19,
       },
       {
         office: 'Grid Deployment Office and Office of Electricity',
         fte2024: 251,
         cuts2026: 171,
-        change: -68,
       },
-      { office: 'Office of Nuclear Energy', fte2024: 295, cuts2026: 43, change: -15 },
+      { office: 'Office of Nuclear Energy', fte2024: 295, cuts2026: 43 },
     ];
   });
 
@@ -42,7 +40,7 @@
           <dt class="">Proposed staff reductions:</dt>
           <dd>{cuts2026}</dd>
           <dt class="">Change from 2024:</dt>
-          <dd>{change}%</dd>
+          <dd>{Math.round((-cuts2026 / fte2024) * 100)}%</dd>
         </dl>
       </StaffingCutsPie>
     {/each}
