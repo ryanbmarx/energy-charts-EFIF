@@ -13,7 +13,7 @@
 <script lang="ts">
   import * as Select from '@/lib/components/ui/select';
   import SpendingLeftForInnovation from './lib/SpendingLeftForInnovation.svelte';
-  import StaffingCuts from '$lib/StaffingCuts.svelte';
+  import StaffingCuts from '$lib/staffing-cuts/StaffingCuts.svelte';
   import HistoricalStaffingChanges from '$lib//HistoricalStaffingChanges.svelte';
   import ResourcesRatio from '$lib//ResourcesRatio.svelte';
   import FedEmployeeSpending from './lib/fedEmployeeSpending/FedEmployeeSpending.svelte';
@@ -26,7 +26,7 @@
   import styles from '@/app.css?inline';
   import type { Component } from 'svelte';
   import { onMount } from 'svelte';
-  import StaffingCutsSmall from './lib/StaffingCutsSmall.svelte';
+  import StaffingCutsSmall from './lib/staffing-cuts/StaffingCutsSmall.svelte';
 
   type Chart = {
     page: 'Home' | 'Spending' | 'Projects' | 'People';

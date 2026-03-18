@@ -1,6 +1,7 @@
 <script lang="ts">
   import { BarChart, Tooltip } from 'layerchart';
   import { formatMoney } from '@/utils/format-money';
+  import Legend from './Legend.svelte';
 
   type Entry = {
     year: number;
@@ -28,9 +29,21 @@
     },
     { key: 'obbbaRescissions', color: 'var(--red)' },
   ];
+
+  const legendItems = [
+    {
+      label: 'Resources',
+      color: 'var(--middle-green)',
+    },
+    {
+      label: 'Recission',
+      color: 'var(--red)',
+    },
+  ];
 </script>
 
 <div class="chart-container">
+  <Legend items={legendItems} />
   <BarChart
     {data}
     props={{

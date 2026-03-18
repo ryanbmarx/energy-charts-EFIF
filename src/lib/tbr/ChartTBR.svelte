@@ -83,7 +83,8 @@
   >
     {@render chartHeader({
       header: "DOE's innovation budget is historically high",
-      label: 'Total budgetary resources (TBR) for science and energy innovation',
+      label:
+        'Total budgetary resources (TBR) for science and energy innovation programs (excluding Loan Programs Office)',
       description:
         "The passage of the Bipartisan Infrastructure Law (BIL, 2021) and Inflation Reduction Act (IRA, 2022) quadrupled DOE's available funding for science and energy innovation.",
     })}
@@ -94,7 +95,6 @@
           class: 'fill-bar-base stroke-none',
           rounded: 'none',
         },
-        highlight: { bar: { class: 'fill-bar-highlight' } },
         xAxis: { classes: { tickLabel: 'font-bold' } },
         yAxis: {
           format: (v: number) => (v === 0 ? '' : `$${v}`),
