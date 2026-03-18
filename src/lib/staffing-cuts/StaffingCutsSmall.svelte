@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PieChart, Arc, Tooltip } from 'layerchart';
-  import Legend from './Legend.svelte';
-  import StaffingCutsPie from './StaffingCutsPie.svelte';
+  import Legend from '../Legend.svelte';
+  import StaffingCutsPie from '../StaffingCutsPie.svelte';
 
   type StaffingRow = { office: string; fte2024: number; cuts2026: number; change: number };
 
