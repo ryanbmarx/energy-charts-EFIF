@@ -61,6 +61,14 @@
       return acc;
     }, new Set<string>());
   });
+
+  // (Mostly) shared chart props
+  const padding = { left: 45, top: 20, right: 0, bottom: 8 };
+  const yDomain = [-12_000_000_000, 4_000_000_000];
+  // Explicit ticks so axis labels and grid lines stay in sync across charts
+  const yTicks = [-12e9, -10e9, -8e9, -6e9, -4e9, -2e9, 0, 2e9, 4e9];
+  const seriesLayout = 'stackDiverging';
+  const renderContext = 'svg';
 </script>
 
 <div class="charts-container">
@@ -76,7 +84,29 @@
         ]}
       />
       <div class="chart">
-        <div class="chart__axis flex-0">axis axis axis axis axis axis</div>
+        <!-- Shared y-axis: same domain/padding as the charts but no bars -->
+        <div class="chart__axis">
+          <span class="invisible mb-4 text-center text-lg leading-none uppercase">X</span>
+          <BarChart
+            data={[{ id: 'axis' }]}
+            x="id"
+            series={[]}
+            {seriesLayout}
+            {yDomain}
+            {padding}
+            tooltip={false}
+            grid={{ yTicks }}
+            props={{
+              xAxis: { ticks: [] },
+              yAxis: {
+                ticks: yTicks,
+                format: formatMoney,
+                classes: { tickLabel: 'font-bold text-muted-foreground' },
+              },
+            }}
+            {renderContext}
+          />
+        </div>
         {#each charts as { data, series, title, totalPositiveValue, totalNegativeValue } (title)}
           <div class="chart__inner" data-title={title}>
             <span class="mb-4 text-center text-lg leading-none uppercase">{title}</span>
@@ -85,19 +115,17 @@
               {data}
               x="id"
               {series}
-              seriesLayout="stackDiverging"
-              yDomain={[-12_000_000_000, 4_000_000_000]}
-              padding={{ left: 45, top: 20, right: 8, bottom: 200 }}
+              {seriesLayout}
+              {yDomain}
+              padding={{ ...padding, left: 0 }}
               tooltip={false}
+              grid={{ yTicks }}
               props={{
                 bars: { rounded: 'none' },
                 xAxis: { ticks: [] },
-                yAxis: {
-                  format: formatMoney,
-                  classes: { tickLabel: 'font-bold text-muted-foreground' },
-                },
+                yAxis: { ticks: [], classes: { root: 'hidden' } },
               }}
-              renderContext="svg"
+              {renderContext}
             >
               {#snippet aboveMarks({ context })}
                 {#if totalPositiveValue > 0}
@@ -159,10 +187,16 @@
     align-items: stretch;
   }
 
+  .chart__axis {
+    /* Fixed-width column just for the shared y-axis */
+    flex: 0 0 50px;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
   .chart__inner {
     /* Each individual bar */
     flex: 1 1;
-    outline: 1px solid blue;
     display: flex;
     gap: calc(0 * var(--spacing));
     flex-flow: column nowrap;
