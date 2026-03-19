@@ -173,7 +173,6 @@
     min-height: 600px;
     height: 100%;
     max-height: 95vh;
-    outline: 1px solid red;
   }
 
   .charts {
