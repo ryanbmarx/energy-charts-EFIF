@@ -64,7 +64,12 @@
             : value >= 0
               ? 'var(--middle-green)'
               : 'var(--orange)',
-        props: { stroke: 'white', 'stroke-width': '1' },
+        props: {
+          stroke: 'white',
+          'stroke-width': '1',
+          // Dim non-selected bars when a segment is highlighted
+          opacity: highlight && name !== highlight ? 0.3 : 1,
+        },
       }));
   }
 </script>
