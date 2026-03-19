@@ -68,9 +68,21 @@ describe('formatMoney', () => {
 describe('formatMoneyParts', () => {
   describe('billions (>= 1e9)', () => {
     const cases: PartCase[] = [
-      { label: 'positive: 1B', input: 1_000_000_000, expected: { prefix: '$', value: 1, suffix: 'B' } },
-      { label: 'positive: 3.54B', input: 3_539_000_000, expected: { prefix: '$', value: 3.54, suffix: 'B' } },
-      { label: 'negative: -3.54B', input: -3_539_000_000, expected: { prefix: '-$', value: 3.54, suffix: 'B' } },
+      {
+        label: 'positive: 1B',
+        input: 1_000_000_000,
+        expected: { prefix: '$', value: 1, suffix: 'B' },
+      },
+      {
+        label: 'positive: 3.54B',
+        input: 3_539_000_000,
+        expected: { prefix: '$', value: 3.54, suffix: 'B' },
+      },
+      {
+        label: 'negative: -3.54B',
+        input: -3_539_000_000,
+        expected: { prefix: '-$', value: 3.54, suffix: 'B' },
+      },
     ];
 
     for (const { label, input, expected } of cases) {
@@ -82,9 +94,17 @@ describe('formatMoneyParts', () => {
 
   describe('millions (>= 1e6, < 1e9)', () => {
     const cases: PartCase[] = [
-      { label: 'positive: 25M', input: 25_000_000, expected: { prefix: '$', value: 25, suffix: 'M' } },
+      {
+        label: 'positive: 25M',
+        input: 25_000_000,
+        expected: { prefix: '$', value: 25, suffix: 'M' },
+      },
       { label: 'positive: 1M', input: 1_000_000, expected: { prefix: '$', value: 1, suffix: 'M' } },
-      { label: 'negative: -25M', input: -25_000_000, expected: { prefix: '-$', value: 25, suffix: 'M' } },
+      {
+        label: 'negative: -25M',
+        input: -25_000_000,
+        expected: { prefix: '-$', value: 25, suffix: 'M' },
+      },
     ];
 
     for (const { label, input, expected } of cases) {
@@ -98,7 +118,11 @@ describe('formatMoneyParts', () => {
     const cases: PartCase[] = [
       { label: 'positive: 1.5K', input: 1_500, expected: { prefix: '$', value: 1.5, suffix: 'K' } },
       { label: 'positive: 1K', input: 1_000, expected: { prefix: '$', value: 1, suffix: 'K' } },
-      { label: 'negative: -1.5K', input: -1_500, expected: { prefix: '-$', value: 1.5, suffix: 'K' } },
+      {
+        label: 'negative: -1.5K',
+        input: -1_500,
+        expected: { prefix: '-$', value: 1.5, suffix: 'K' },
+      },
     ];
 
     for (const { label, input, expected } of cases) {
@@ -124,8 +148,16 @@ describe('formatMoneyParts', () => {
 
   describe('decimals override', () => {
     const cases: PartCase[] = [
-      { label: '3.539B at 1 decimal', input: 3_539_000_000, expected: { prefix: '$', value: 3.5, suffix: 'B' } },
-      { label: '25M at 2 decimals', input: 25_000_000, expected: { prefix: '$', value: 25, suffix: 'M' } },
+      {
+        label: '3.539B at 1 decimal',
+        input: 3_539_000_000,
+        expected: { prefix: '$', value: 3.5, suffix: 'B' },
+      },
+      {
+        label: '25M at 2 decimals',
+        input: 25_000_000,
+        expected: { prefix: '$', value: 25, suffix: 'M' },
+      },
     ];
 
     for (const { label, input, expected } of cases) {
