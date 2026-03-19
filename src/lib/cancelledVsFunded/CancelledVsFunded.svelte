@@ -1,10 +1,53 @@
 <script lang="ts">
-  import { BarChart } from 'layerchart';
+  import Callout from './Callout.svelte';
+  import SegmentButtons from './SegmentButtons.svelte';
   import { grants, loans, planned } from './cancelledVsFunded';
-  import * as Select from '$lib/components/ui/select/index.js';
+  import Legend from '../Legend.svelte';
   import { formatMoney } from '@/utils/format-money';
+  import { BarChart } from 'layerchart';
+  // (Mostly) shared chart props
+  const padding = { left: 45, top: 20, right: 0, bottom: 8 };
+  const yDomain = [-12_000_000_000, 4_000_000_000];
+
+  const yTicks = [-12e9, -10e9, -8e9, -6e9, -4e9, -2e9, 0, 2e9, 4e9]; // Explicit ticks so axis labels and grid lines stay in sync across charts
+  const seriesLayout = 'stackDiverging';
+  const renderContext = 'svg';
 
   // highlight: name of the selected segment, or undefined for no highlight
+  let selectedSegment = $state<string | undefined>();
+
+  // Re-derives whenever selectedSegment changes to update highlight colors
+  const charts = $derived([
+    {
+      data: [{ id: 'grants' }],
+      series: makeSeries(grants, selectedSegment),
+      title: 'GRANTS',
+      totalPositiveValue: grants.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
+      totalNegativeValue: grants.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
+    },
+    {
+      data: [{ id: 'loans' }],
+      series: makeSeries(loans, selectedSegment),
+      title: 'LOANS',
+      totalPositiveValue: loans.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
+      totalNegativeValue: loans.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
+    },
+    {
+      data: [{ id: 'planned' }],
+      series: makeSeries(planned, selectedSegment),
+      title: 'PLANNED SPENDING',
+      subtitle: '(FOAs and NOIs)',
+      totalPositiveValue: planned.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
+      totalNegativeValue: planned.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
+    },
+  ]);
+  const segments = $derived.by(() => {
+    return grants.reduce((acc, curr) => {
+      acc.add(curr.name);
+      return acc;
+    }, new Set<string>());
+  });
+
   function makeSeries(d: typeof grants, highlight: string | undefined) {
     return d
       .filter((d) => d.value !== 0)
@@ -21,149 +64,158 @@
             : value >= 0
               ? 'var(--middle-green)'
               : 'var(--orange)',
-        // stroke-none is applied per-series so highlighted bars can override it
-        props:
-          name === highlight ? { stroke: 'black', 'stroke-width': '1' } : { class: 'stroke-none' },
+        props: {
+          stroke: 'white',
+          'stroke-width': '1',
+          // Dim non-selected bars when a segment is highlighted
+          opacity: highlight && name !== highlight ? 0.3 : 1,
+        },
       }));
-  }
-
-  let selectedSegment = $state<string | undefined>();
-
-  // Re-derives whenever selectedSegment changes to update highlight colors
-  const charts = $derived([
-    {
-      data: [{ id: 'grants' }],
-      series: makeSeries(grants, selectedSegment),
-      title: 'Grants',
-      totalPositiveValue: grants.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
-      totalNegativeValue: grants.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
-    },
-    {
-      data: [{ id: 'loans' }],
-      series: makeSeries(loans, selectedSegment),
-      title: 'Loans',
-      totalPositiveValue: loans.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
-      totalNegativeValue: loans.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
-    },
-    {
-      data: [{ id: 'planned' }],
-      series: makeSeries(planned, selectedSegment),
-      title: 'Planned spending',
-      totalPositiveValue: planned.reduce((s, d) => (d.value > 0 ? s + d.value : s), 0),
-      totalNegativeValue: planned.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
-    },
-  ]);
-  const segments = $derived.by(() => {
-    return grants.reduce((acc, curr) => {
-      acc.add(curr.name);
-      return acc;
-    }, new Set<string>());
-  });
-  const selectedSegmentLabel = $derived(selectedSegment || 'Select a segment to highlight');
-  const highlightGrants = $derived(getHighlightValue(grants));
-  const highlightLoans = $derived(getHighlightValue(loans));
-  const highlightPlanned = $derived(getHighlightValue(planned));
-
-  function getHighlightValue(data: typeof grants) {
-    const highlightFigure = data.find((s) => s.name === selectedSegmentLabel)?.value;
-    return highlightFigure ? formatMoney(highlightFigure) : '–';
   }
 </script>
 
-<div class="controls" role="menubar">
-  <Select.Root type="single" bind:value={selectedSegment}>
-    <Select.Trigger class="min-w-4 flex-1 bg-white">{selectedSegmentLabel}</Select.Trigger>
-    <Select.Content
-      portalProps={{
-        disabled: true,
-      }}
-    >
-      {#each segments as segment (segment)}
-        <Select.Item value={segment}>{segment}</Select.Item>
-      {/each}
-    </Select.Content>
-  </Select.Root>
-  <ul class="flex-1">
-    <li>Grants: <b>{highlightGrants}</b></li>
-    <li>Loans: <b>{highlightLoans}</b></li>
-    <li>Planned spending: <b>{highlightPlanned}</b></li>
-  </ul>
-</div>
-<div class="chart-container">
-  {#each charts as { data, series, title, totalPositiveValue, totalNegativeValue } (title)}
-    <div class="chart" data-title={title}>
-      <span class="mb-4 text-center text-lg leading-none uppercase">{title}</span>
+<div class="charts-container">
+  <Callout bind:selectedSegment {segments}></Callout>
+  <div class="charts">
+    <SegmentButtons label="Click to highlight technology on chart" {segments} bind:selectedSegment
+    ></SegmentButtons>
+    <div class="charts__inner flex-1">
+      <Legend
+        class="justify-center"
+        items={[
+          { label: 'Funded project', color: 'var(--middle-green)' },
+          { label: 'Cancelled project', color: 'var(--orange)' },
+        ]}
+      />
+      <div class="chart">
+        <!-- Shared y-axis: same domain/padding as the charts but no bars -->
+        <div class="chart__axis">
+          <span class="invisible mb-4 text-center text-lg leading-none uppercase">X</span>
+          <BarChart
+            data={[{ id: 'axis' }]}
+            x="id"
+            series={[]}
+            {seriesLayout}
+            {yDomain}
+            {padding}
+            tooltip={false}
+            grid={{ yTicks }}
+            props={{
+              xAxis: { ticks: [] },
+              yAxis: {
+                ticks: yTicks,
+                format: formatMoney,
+                classes: { tickLabel: 'font-bold text-muted-foreground' },
+              },
+            }}
+            {renderContext}
+          />
+        </div>
+        {#each charts as { data, series, title, subtitle = "", totalPositiveValue, totalNegativeValue } (title)}
+          <div class="chart__inner" data-title={title}>
+            <span class="chart-label block text-center text-lg">
+              {title}
+              {#if subtitle}
+                <span class="block italic">{subtitle}</span>
+              {/if}
+            </span>
 
-      <BarChart
-        {data}
-        x="id"
-        {series}
-        seriesLayout="stackDiverging"
-        yDomain={[-12_000_000_000, 4_000_000_000]}
-        padding={{ left: 45, top: 20, right: 8, bottom: 20 }}
-        tooltip={false}
-        props={{
-          bars: { rounded: 'none' },
-          xAxis: { ticks: [] },
-          yAxis: {
-            format: formatMoney,
-            classes: { tickLabel: 'font-bold text-muted-foreground' },
-          },
-        }}
-        renderContext="svg"
-      >
-        {#snippet aboveMarks({ context })}
-          {#if totalPositiveValue > 0}
-            <text
-              x={context.width / 2}
-              y={context.yScale(totalPositiveValue) - 4}
-              text-anchor="middle"
-              font-weight="bold"
-              font-size="12">{formatMoney(totalPositiveValue)}</text
+            <BarChart
+              {data}
+              x="id"
+              {series}
+              {seriesLayout}
+              {yDomain}
+              padding={{ ...padding, left: 0 }}
+              tooltip={false}
+              grid={{ yTicks }}
+              props={{
+                bars: { rounded: 'none' },
+                xAxis: { ticks: [] },
+                yAxis: { ticks: [], classes: { root: 'hidden' } },
+              }}
+              {renderContext}
             >
-          {/if}
-          {#if totalNegativeValue < 0}
-            <text
-              x={context.width / 2}
-              y={context.yScale(totalNegativeValue) + 14}
-              text-anchor="middle"
-              font-weight="bold"
-              font-size="12">{formatMoney(totalNegativeValue)}</text
-            >
-          {/if}
-        {/snippet}
-      </BarChart>
+              {#snippet aboveMarks({ context })}
+                {#if totalPositiveValue > 0}
+                  <text
+                    x={context.width / 2}
+                    y={context.yScale(totalPositiveValue) - 4}
+                    text-anchor="middle"
+                    font-weight="bold"
+                    font-size="12">{formatMoney(totalPositiveValue)}</text
+                  >
+                {/if}
+                {#if totalNegativeValue < 0}
+                  <text
+                    x={context.width / 2}
+                    y={context.yScale(totalNegativeValue) + 14}
+                    text-anchor="middle"
+                    font-weight="bold"
+                    font-size="12">{formatMoney(totalNegativeValue)}</text
+                  >
+                {/if}
+              {/snippet}
+            </BarChart>
+          </div>
+        {/each}
+      </div>
     </div>
-  {/each}
+  </div>
 </div>
 
 <style lang="postcss">
-  .controls {
-    padding: calc(4 * var(--spacing));
-    background: var(--color-amber-50);
+  .charts-container {
+    /* Total parent container */
     display: flex;
-    align-items: center;
+    flex-flow: column nowrap;
     gap: calc(4 * var(--spacing));
-
-    ul {
-      display: flex;
-      align-items: center;
-      gap: calc(4 * var(--spacing));
-    }
+    min-height: 600px;
+    height: 100%;
+    max-height: 95vh;
+    outline: 1px solid red;
   }
 
-  .chart-container {
-    width: 100%;
-    aspect-ratio: 16 / 9;
+  .charts {
+    /* Layout device with he charts and buttons */
+    flex: 1 1;
     display: flex;
-    gap: calc(4 * var(--spacing));
+    gap: inherit;
+  }
+
+  .charts__inner {
+    /* Legend + chart elements container (.chart) */
+    display: flex;
+    flex-flow: column nowrap;
+    gap: inherit;
   }
 
   .chart {
+    --axis-width: 5rem;
+    /* The whole chart composition */
     flex: 1 1;
+    height: 100%;
+    display: grid;
+    gap: calc(var(--spacing) * 2) 0;
+    grid-template-columns: var(--axis-width) repeat(3, minmax(1px, 1fr));
+    grid-template-rows: max-content minmax(1px, 1fr);
 
-    display: flex;
-    gap: calc(0 * var(--spacing));
-    flex-flow: column nowrap;
+    & > * {
+      height: 100%;
+      grid-row: 1/-1;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: subgrid;
+    }
+
+    .chart__axis {
+      /* Fixed-width column just for the shared y-axis */
+      width: var(--axis-width);
+    }
+  }
+
+  .chart-label {
+    grid-row: 1;
+    line-height: 1.15;
   }
 </style>
