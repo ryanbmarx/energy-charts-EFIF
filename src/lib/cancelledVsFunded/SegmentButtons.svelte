@@ -10,11 +10,11 @@
   } = $props();
 </script>
 
-<div class="segments">
+<div class="segments hidden md:flex md:flex-col">
   {#if label}
     <p class="text-muted-foreground mb-2 text-center text-sm text-balance italic">{label}</p>
   {/if}
-  <ul class="segments__btns hidden md:block">
+  <ul class="segments__btns">
     {#each segments as segment (segment)}
       {@const highlight = segment === selectedSegment}
       <li>

@@ -168,11 +168,13 @@
     flex-flow: column nowrap;
     gap: calc(4 * var(--spacing));
     max-height: 90vh;
+    min-height: 600px;
     outline: 1px solid red;
   }
 
   .charts {
     /* Layout device with he charts and buttons */
+    flex: 1 1;
     display: flex;
     gap: inherit;
   }

@@ -25,7 +25,7 @@
 
 <div class="callout" role="menubar">
   <Select.Root type="single" bind:value={selectedSegment}>
-    <Select.Trigger class="w-full min-w-4 flex-1 bg-white sm:hidden"
+    <Select.Trigger class="w-full min-w-4 flex-1 bg-white md:hidden"
       >{selectedSegmentLabel}</Select.Trigger
     >
     <Select.Content
@@ -65,7 +65,7 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    /* gap: calc(4 * var(--spacing)); */
+    gap: calc(2 * var(--spacing));
 
     ul {
       display: grid;
