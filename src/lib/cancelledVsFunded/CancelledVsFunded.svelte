@@ -64,9 +64,7 @@
             : value >= 0
               ? 'var(--middle-green)'
               : 'var(--orange)',
-        // stroke-none is applied per-series so highlighted bars can override it
-        props:
-          name === highlight ? { stroke: 'black', 'stroke-width': '1' } : { class: 'stroke-none' },
+        props: { stroke: 'white', 'stroke-width': '1' },
       }));
   }
 </script>
@@ -167,8 +165,9 @@
     display: flex;
     flex-flow: column nowrap;
     gap: calc(4 * var(--spacing));
-    max-height: 90vh;
     min-height: 600px;
+    height: 100%;
+    max-height: 95vh;
     outline: 1px solid red;
   }
 
