@@ -14,11 +14,13 @@
     cuts2026,
     maxValue,
     children,
+    highlight = false,
     labelPie = false,
   }: StaffingRow & {
     labelPie?: boolean;
     maxValue: number;
     children?: Snippet;
+    highlight?: boolean;
   } = $props();
   const outerRadius = $derived(fte2024 / maxValue);
   const pctCut = $derived(Math.round((cuts2026 / fte2024) * 100));
@@ -29,7 +31,13 @@
   const cRange = $derived(data.map((d) => d.color));
 </script>
 
-<div class="office" data-office={office} data-fte2024={fte2024} data-outerRadius={outerRadius}>
+<div
+  class="office"
+  class:highlight
+  data-office={office}
+  data-fte2024={fte2024}
+  data-outerRadius={outerRadius}
+>
   <p class="text-center text-sm font-bold text-balance">{office}</p>
   <div class="pie" style:--outer-radius="{outerRadius * 50}%">
     {#if labelPie}
@@ -75,6 +83,10 @@
     grid-row: span 3;
     grid-template-rows: subgrid;
     background-color: #eee;
+
+    &.highlight {
+      background: var(--color-amber-100);
+    }
   }
 
   .pie {

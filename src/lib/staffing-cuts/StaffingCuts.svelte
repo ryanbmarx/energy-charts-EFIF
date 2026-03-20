@@ -4,6 +4,8 @@
   import Legend from '../Legend.svelte';
   import type { StaffingRow } from './types';
 
+  const { highlights }: { highlights?: Set<string> } = $props();
+
   const dataSeriesForHumans: Record<string, string> = {
     fte2024: '2024 FTEs',
     cuts2026: 'Proposed 2026 reductions',
@@ -29,19 +31,32 @@
   const maxValue = $derived.by(() => {
     return Math.max(...offices.map(({ cuts2026, fte2024 }) => cuts2026 + fte2024));
   });
+
+  const legendItems = $derived.by(() => {
+    return [
+      { color: 'white', label: 'Proposed 2026 reductions', borderColor: '#aaa' },
+      { color: 'var(--blue)', label: '2024 FTEs' },
+      highlights && {
+        color: 'var(--color-amber-100)',
+        label: 'Priority offices',
+        borderColor: '#aaa',
+      },
+    ].filter((i) => !!i);
+  });
 </script>
 
 <div class="chart-wrapper">
-  <Legend
-    class="mb-2"
-    items={[
-      { color: 'white', label: 'Proposed 2026 reductions', borderColor: '#aaa' },
-      { color: 'var(--blue)', label: '2024 FTEs' },
-    ]}
-  />
+  <Legend class="mb-2" items={legendItems} />
   <div class="chart">
     {#each offices as { office, fte2024, cuts2026 } (office)}
-      <StaffingCutsPie {office} {fte2024} {cuts2026} {maxValue} labelPie>
+      <StaffingCutsPie
+        {office}
+        {fte2024}
+        {cuts2026}
+        {maxValue}
+        labelPie
+        highlight={highlights?.has(office)}
+      >
         <dl>
           <dt class="flex items-center gap-2">
             <Swatch background="var(--blue)"></Swatch>
