@@ -1,6 +1,6 @@
 export const segments = [
   {
-    name: 'ARPA-E',
+    name: 'Advanced Research Projects Agency - Energy',
     slug: 'arpa-e',
     enacted: 4_600_000,
     diff_absolute_white_house: -2_600_000,
@@ -12,7 +12,7 @@ export const segments = [
     order: 1,
   },
   {
-    name: 'Clean Energy Demonstrations (OCED)',
+    name: 'Office of Clean Energy Demonstrations',
     slug: 'clean-energy-demonstrations-oced',
     enacted: 50_000_000,
     diff_absolute_white_house: -50_000_000,
@@ -24,7 +24,7 @@ export const segments = [
     order: 2,
   },
   {
-    name: 'Electricity (OE)',
+    name: 'Office of Electricity',
     slug: 'electricity-oe',
     enacted: 280_000_000,
     diff_absolute_white_house: -87_000_000,
@@ -36,7 +36,7 @@ export const segments = [
     order: 3,
   },
   {
-    name: 'Energy Efficiency and Renewable Energy (EERE)',
+    name: 'Office of Energy Efficiency and Renewable Energy, Etc.',
     slug: 'energy-efficiency-and-renewable-energy-eere',
     enacted: 3_460_000_000,
     diff_absolute_white_house: -2_572_000_000,
@@ -48,7 +48,7 @@ export const segments = [
     order: 4,
   },
   {
-    name: 'Fossil Energy',
+    name: 'Office of Fossil Energy and Carbon Management',
     slug: 'fossil-energy',
     enacted: 865_000_000,
     diff_absolute_white_house: -270_000_000,
@@ -60,7 +60,7 @@ export const segments = [
     order: 5,
   },
   {
-    name: 'Grid Deployment (GDO)',
+    name: 'Grid Deployment Office',
     slug: 'grid-deployment-gdo',
     enacted: 60_000_000,
     diff_absolute_white_house: -45_000_000,
@@ -72,7 +72,7 @@ export const segments = [
     order: 6,
   },
   {
-    name: 'Manufacturing and Energy Supply Chains (MESC)',
+    name: 'Manufacturing and Energy Supply Chains',
     slug: 'manufacturing-and-energy-supply-chains-mesc',
     enacted: 19_000_000,
     diff_absolute_white_house: -4_000_000,
@@ -84,7 +84,7 @@ export const segments = [
     order: 7,
   },
   {
-    name: 'Nuclear Energy',
+    name: 'Office of Nuclear Energy',
     slug: 'nuclear-energy',
     enacted: 1_690_000_000,
     diff_absolute_white_house: -480_000_000,
