@@ -17,6 +17,11 @@
   // highlight: name of the selected segment, or undefined for no highlight
   let selectedSegment = $state<string | undefined>();
 
+  // tooltip state: label + fixed viewport position
+  let tooltipLabel = $state<string | undefined>();
+  let tooltipX = $state(0);
+  let tooltipY = $state(0);
+
   // Re-derives whenever selectedSegment changes to update highlight colors
   const charts = $derived([
     {
@@ -88,10 +93,30 @@
           'stroke-width': '1',
           // Dim non-selected bars when a segment is highlighted
           opacity: highlight && name !== highlight ? 0.3 : 1,
+          style: 'cursor: pointer',
+          // Closures that set tooltip state on hover — not read during $derived computation
+          onpointerenter: (e: PointerEvent) => {
+            tooltipLabel = name;
+            tooltipX = e.clientX;
+            tooltipY = e.clientY;
+          },
+          onpointermove: (e: PointerEvent) => {
+            tooltipX = e.clientX;
+            tooltipY = e.clientY;
+          },
+          onpointerleave: () => {
+            tooltipLabel = undefined;
+          },
         },
       }));
   }
 </script>
+
+{#if tooltipLabel}
+  <div class="bar-tooltip shadow" style:left="{tooltipX}px" style:top="{tooltipY}px">
+    {tooltipLabel}
+  </div>
+{/if}
 
 <div class="charts-container">
   <MobileSelect bind:selectedSegment {segments}></MobileSelect>
@@ -129,7 +154,7 @@
             {renderContext}
           />
         </div>
-        {#each charts as { id, data, series, title, subtitle = "", totalPositiveValue, totalNegativeValue } (title)}
+        {#each charts as { id, data, series, title, subtitle = '', totalPositiveValue, totalNegativeValue } (title)}
           <div class="chart__inner" data-title={title}>
             <span class="chart-label block text-center text-lg">
               {title}
@@ -151,6 +176,11 @@
                 bars: { rounded: 'none' },
                 xAxis: { ticks: [] },
                 yAxis: { ticks: [], classes: { root: 'hidden' } },
+              }}
+              onBarClick={(_, detail) => {
+                const name = detail.series.label;
+                // Toggle: clicking the active segment deselects it
+                if (name) selectedSegment = selectedSegment === name ? undefined : name;
               }}
               {renderContext}
             >
@@ -183,6 +213,21 @@
 </div>
 
 <style lang="postcss">
+  .bar-tooltip {
+    position: fixed;
+    background: #fffd;
+    color: white;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 100;
+    /* center horizontally, sit just above cursor */
+    transform: translate(-50%, calc(-100% - 6px));
+    white-space: nowrap;
+    color: var(--color-zinc-900);
+  }
+
   .charts-container {
     /* Total parent container */
     display: flex;
