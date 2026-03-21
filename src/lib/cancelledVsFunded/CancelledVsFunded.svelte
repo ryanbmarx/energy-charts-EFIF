@@ -107,8 +107,8 @@
         ]}
       />
       <div class="chart">
-        <!-- Shared y-axis: same domain/padding as the charts but no bars -->
         <div class="chart__axis">
+          <!-- Shared y-axis: same domain/padding as the charts but no bars -->
           <BarChart
             data={[{ id: 'axis' }]}
             x="id"

@@ -1,13 +1,13 @@
-type Technology = {
+type Data = {
   name: string;
   grants: number;
   loans: number;
   planned: number;
 };
 
-type NamedValue = { name: string; value: number };
+type NamedValue = { id: string; name: string; value: number };
 
-export const data: Technology[] = [
+export const data: Data[] = [
   {
     name: 'Grid & Storage',
     grants: -3_486_533_774,
