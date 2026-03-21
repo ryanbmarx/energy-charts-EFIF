@@ -21,7 +21,7 @@ export default defineConfig({
       // Build from main.ts directly so DevApp never ships in the production bundle
       input: 'src/main.ts',
       output: {
-        entryFileNames: `assets/[name].js`,
+        entryFileNames: `assets/index.js`, // Hardcode for backwards compat
         chunkFileNames: `assets/[name].js`,
         assetFileNames: `assets/[name].[ext]`,
       },
