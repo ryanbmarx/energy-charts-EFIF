@@ -1,7 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-/// <reference types="vitest" />
 
 // https://vite.dev/config/
 export default defineConfig({
