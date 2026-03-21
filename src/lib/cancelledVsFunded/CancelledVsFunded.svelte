@@ -1,14 +1,15 @@
 <script lang="ts">
-  import Callout from './Callout.svelte';
+  import MobileSelect from './MobileSelect.svelte';
   import SegmentButtons from './SegmentButtons.svelte';
   import { grants, loans, planned } from './cancelledVsFunded';
   import Legend from '../Legend.svelte';
-  import { formatMoney } from '@/utils/format-money';
+  import { formatMoney, formatMoneyParts } from '@/utils/format-money';
   import { BarChart } from 'layerchart';
+  import CalloutSingle from './CalloutSingle.svelte';
+
   // (Mostly) shared chart props
   const padding = { left: 45, top: 20, right: 0, bottom: 8 };
   const yDomain = [-12_000_000_000, 4_000_000_000];
-
   const yTicks = [-12e9, -10e9, -8e9, -6e9, -4e9, -2e9, 0, 2e9, 4e9]; // Explicit ticks so axis labels and grid lines stay in sync across charts
   const seriesLayout = 'stackDiverging';
   const renderContext = 'svg';
@@ -19,6 +20,7 @@
   // Re-derives whenever selectedSegment changes to update highlight colors
   const charts = $derived([
     {
+      id: 'grants' as const,
       data: [{ id: 'grants' }],
       series: makeSeries(grants, selectedSegment),
       title: 'GRANTS',
@@ -26,6 +28,7 @@
       totalNegativeValue: grants.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
     },
     {
+      id: 'loans' as const,
       data: [{ id: 'loans' }],
       series: makeSeries(loans, selectedSegment),
       title: 'LOANS',
@@ -33,6 +36,7 @@
       totalNegativeValue: loans.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
     },
     {
+      id: 'planned' as const,
       data: [{ id: 'planned' }],
       series: makeSeries(planned, selectedSegment),
       title: 'PLANNED SPENDING',
@@ -41,12 +45,27 @@
       totalNegativeValue: planned.reduce((s, d) => (d.value < 0 ? s + d.value : s), 0),
     },
   ]);
+
+  // Required elements to make the big-number label;
+  const highlightParts = $derived.by(() => {
+    return {
+      grants: getHighlightValue(grants),
+      planned: getHighlightValue(planned),
+      loans: getHighlightValue(loans),
+    };
+  });
+
   const segments = $derived.by(() => {
     return grants.reduce((acc, curr) => {
       acc.add(curr.name);
       return acc;
     }, new Set<string>());
   });
+
+  function getHighlightValue(data: typeof grants) {
+    const highlightFigure = data.find((s) => s.name === selectedSegment)?.value;
+    return highlightFigure ? formatMoneyParts(highlightFigure) : null;
+  }
 
   function makeSeries(d: typeof grants, highlight: string | undefined) {
     return d
@@ -75,7 +94,7 @@
 </script>
 
 <div class="charts-container">
-  <Callout bind:selectedSegment {segments}></Callout>
+  <MobileSelect bind:selectedSegment {segments}></MobileSelect>
   <div class="charts">
     <SegmentButtons label="Click to highlight technology on chart" {segments} bind:selectedSegment
     ></SegmentButtons>
@@ -90,7 +109,6 @@
       <div class="chart">
         <!-- Shared y-axis: same domain/padding as the charts but no bars -->
         <div class="chart__axis">
-          <span class="invisible mb-4 text-center text-lg leading-none uppercase">X</span>
           <BarChart
             data={[{ id: 'axis' }]}
             x="id"
@@ -111,7 +129,7 @@
             {renderContext}
           />
         </div>
-        {#each charts as { data, series, title, subtitle = "", totalPositiveValue, totalNegativeValue } (title)}
+        {#each charts as { id, data, series, title, subtitle = "", totalPositiveValue, totalNegativeValue } (title)}
           <div class="chart__inner" data-title={title}>
             <span class="chart-label block text-center text-lg">
               {title}
@@ -119,7 +137,7 @@
                 <span class="block italic">{subtitle}</span>
               {/if}
             </span>
-
+            <CalloutSingle parts={highlightParts[id]}></CalloutSingle>
             <BarChart
               {data}
               x="id"
@@ -197,7 +215,7 @@
     display: grid;
     gap: calc(var(--spacing) * 2) 0;
     grid-template-columns: var(--axis-width) repeat(3, minmax(1px, 1fr));
-    grid-template-rows: max-content minmax(1px, 1fr);
+    grid-template-rows: max-content max-content minmax(1px, 1fr);
 
     & > * {
       height: 100%;
@@ -210,6 +228,7 @@
     .chart__axis {
       /* Fixed-width column just for the shared y-axis */
       width: var(--axis-width);
+      grid-row: 3;
     }
   }
 
