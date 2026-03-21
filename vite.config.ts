@@ -19,6 +19,8 @@ export default defineConfig({
   build: {
     outDir: './build',
     rollupOptions: {
+      // Build from main.ts directly so DevApp never ships in the production bundle
+      input: 'src/main.ts',
       output: {
         entryFileNames: `assets/[name].js`,
         chunkFileNames: `assets/[name].js`,
