@@ -6,40 +6,60 @@
   let {
     parts,
   }: {
-    parts: FormatParts | null;
+    parts: FormatParts[] | null;
   } = $props();
 
-  const colorClass = $derived.by(() => {
-    const isNegative = parts?.prefix.includes('-');
-    if (parts?.value) {
-      return isNegative ? 'text-(--red)' : 'text-(--middle-blue)';
-      // return parts.value > 0 ? 'text-(--orange)':'text-(--middle-green)'  ;
-    }
-
-    return 'text-muted-foreground';
+  const partsGroup = $derived.by(() => {
+    return parts?.sort((a, b) => {
+      const aValue = isNegative(a) ? -1 * a.value : a.value;
+      const bValue = isNegative(b) ? -1 * b.value : b.value;
+      return bValue - aValue;
+    });
   });
+
+  function isNegative(parts: FormatParts) {
+    return parts?.prefix.includes('-');
+  }
+  function getColorClass(parts: FormatParts): string {
+    if (parts?.value) {
+      return isNegative(parts) ? 'text-(--red)' : 'text-(--middle-blue)';
+    }
+    return 'text-muted-foreground';
+  }
 </script>
 
 <div class="callout">
-  {#if parts}
-    <NumberFlow {...parts} class={cn('text-lg font-bold md:text-2xl', colorClass)} />
+  {#each partsGroup ?? [] as parts, index (index)}
+    {#if !!parts.value}
+      <NumberFlow {...parts} class={cn('text-lg font-bold md:text-2xl', getColorClass(parts))} />
+    {:else}
+      {@render negativePlaceholder()}
+    {/if}
   {:else}
-    <span class="text-muted-foreground text-lg font-bold">—</span>
-  {/if}
+    {@render negativePlaceholder()}
+  {/each}
 </div>
+
+{#snippet negativePlaceholder()}
+  <span class="text-muted-foreground text-lg font-bold">—</span>
+{/snippet}
 
 <style lang="postcss">
   .callout {
     border-radius: 0.75rem;
     padding: 0 calc(2 * var(--spacing));
     border: 1px solid var(--color-slate-300);
-    max-width: 9rem; /* Magic number to accomadate the widest value*/
-    width: 100%;
+
+    max-width: 14rem;
+    width: 95%;
+
     margin: 0 auto;
     text-align: center;
 
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    align-items: center;
+    gap: calc(4 * var(--spacing));
     justify-content: center;
     min-height: 3.5rem; /* a bit of a magic number that accomadates the number flow*/
   }

@@ -68,8 +68,14 @@
   });
 
   function getHighlightValue(data: typeof grants) {
-    const highlightFigure = data.find((s) => s.name === selectedSegment)?.value;
-    return highlightFigure ? formatMoneyParts(highlightFigure) : null;
+    const highlightFigures = data.filter((s) => s.name === selectedSegment);
+
+    if (highlightFigures.length) {
+      return highlightFigures.map(({ value }) => {
+        return formatMoneyParts(value);
+      });
+    }
+    return null;
   }
 
   function makeSeries(d: typeof grants, highlight: string | undefined) {
@@ -162,6 +168,7 @@
                 <span class="block italic">{subtitle}</span>
               {/if}
             </span>
+
             <CalloutSingle parts={highlightParts[id]}></CalloutSingle>
             <BarChart
               {data}
