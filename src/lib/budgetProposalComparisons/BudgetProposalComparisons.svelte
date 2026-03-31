@@ -2,6 +2,7 @@
   import { BarChart, Tooltip } from 'layerchart';
   import { segments } from './budgetProposalData';
   import { formatMoney } from '@/utils/format-money';
+  import Legend, { type LegendItem } from '../Legend.svelte';
 
   // Flatten segment data for layerchart; tooltip needs the extra fields
   const chartData = segments.map((s) => ({
@@ -20,12 +21,13 @@
       key: 'cong',
       label: 'Congress approved',
       color: 'var(--blue)',
-      props: { insets: { top: 12, bottom: 12 } },
+      props: { insets: { top: 8, bottom: 8 } },
     },
   ];
 </script>
 
 <div class="chart-container">
+  <Legend items={series} class="justify-center"></Legend>
   <div class="chart">
     <BarChart
       data={chartData}
@@ -34,6 +36,7 @@
       {series}
       renderContext="svg"
       padding={{ left: 240, bottom: 30, top: 10, right: 20 }}
+      bandPadding={0.25}
       props={{
         bars: { class: 'stroke-none', rounded: 'none' },
         grid: { x: true, y: true },
@@ -45,7 +48,12 @@
         yAxis: {
           tickMarks: false,
           tickMultiline: true,
-          tickLabelProps: { width: 220, style: 'font-size: 14px', lineHeight: '1.15em', dx: -8 },
+          tickLabelProps: {
+            width: 220,
+            style: 'font-size: 14px; font-weight: bold;',
+            lineHeight: '1.15em',
+            dx: -8,
+          },
         },
       }}
     >
@@ -70,11 +78,12 @@
 
 <style lang="postcss">
   .chart-container {
-    max-width: 60rem;
+    max-width: 75rem;
   }
 
   .chart {
     width: 100%;
+    max-height: 32rem;
     aspect-ratio: 4 / 3;
   }
 
