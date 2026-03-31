@@ -64,6 +64,7 @@
     padding: 1rem;
     background-color: #eee;
     margin-bottom: 2rem;
+    overflow: hidden;
   }
 
   .select-container {

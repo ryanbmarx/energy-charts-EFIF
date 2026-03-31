@@ -57,10 +57,23 @@
     text-align: center;
 
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     align-items: center;
-    gap: calc(4 * var(--spacing));
+
     justify-content: center;
     min-height: 3.5rem; /* a bit of a magic number that accomadates the number flow*/
+
+    :global(number-flow-svelte:not(:first-child)) {
+      margin-top: -0.5em;
+    }
+  }
+  @media (min-width: 1024px) {
+    .callout {
+      flex-direction: row;
+      gap: calc(4 * var(--spacing));
+      :global(number-flow-svelte:not(:first-child)) {
+        margin-top: 0;
+      }
+    }
   }
 </style>
