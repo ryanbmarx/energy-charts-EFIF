@@ -34,6 +34,7 @@
       {data}
       {series}
       x="quarter"
+      yDomain={[0, 4_000_000_000]}
       seriesLayout="group"
       tooltip={false}
       props={{
