@@ -4,22 +4,22 @@
   import Legend from './Legend.svelte';
 
   type Entry = {
-    year: number;
+    year: number | string;
     totalBudgetaryResources: number;
     obbbaRescissions?: number;
   };
 
   const data: Entry[] = [
-    { year: 2017, totalBudgetaryResources: 12086717931 },
-    { year: 2018, totalBudgetaryResources: 13623271547 },
-    { year: 2019, totalBudgetaryResources: 14460163025 },
-    { year: 2020, totalBudgetaryResources: 15816234666 },
-    { year: 2021, totalBudgetaryResources: 16143089697 },
-    { year: 2022, totalBudgetaryResources: 59078364205 },
-    { year: 2023, totalBudgetaryResources: 76933018041 },
-    { year: 2024, totalBudgetaryResources: 81438867259 },
-    { year: 2025, totalBudgetaryResources: 79376394751, obbbaRescissions: 1795803085 },
-    { year: 2026, totalBudgetaryResources: 66904000000 },
+    { year: 2017, totalBudgetaryResources: 17_390_000_000 },
+    { year: 2018, totalBudgetaryResources: 19_220_000_000 },
+    { year: 2019, totalBudgetaryResources: 19_830_000_000 },
+    { year: 2020, totalBudgetaryResources: 20_900_000_000 },
+    { year: 2021, totalBudgetaryResources: 19_980_000_000 },
+    { year: 2022, totalBudgetaryResources: 74_230_000_000 },
+    { year: 2023, totalBudgetaryResources: 93_790_000_000 },
+    { year: 2024, totalBudgetaryResources: 98_050_000_000 },
+    { year: 2025, totalBudgetaryResources: 85_080_000_000, obbbaRescissions: 1_800_000_000 },
+    { year: '2026 (est.)', totalBudgetaryResources: 64_150_000_000 },
   ];
 
   const series = [

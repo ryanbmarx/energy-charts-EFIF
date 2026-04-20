@@ -3,7 +3,7 @@
 
   // Ratio of total budgetary resources to federal staff, by year
   type YearRatio = {
-    year: number;
+    year: number | string;
     value: number;
     annotation?: string;
     annotationIcon?: string;
@@ -16,7 +16,7 @@
   const data: YearRatio[] = [
     {
       year: 2017,
-      value: 4.7,
+      value: 5.2,
       annotationIcon: 'A',
       annotation:
         'In <b>FY17</b>, the average federal employee managed a portfolio with ~$5 million to disburse.',
@@ -24,24 +24,26 @@
       calloutH: 100,
       calloutDy: -20,
     },
-    { year: 2018, value: 5.8 },
-    { year: 2019, value: 6.4 },
-    { year: 2020, value: 7.1 },
-    { year: 2021, value: 7.1 },
+    { year: 2018, value: 6.2 },
+    { year: 2019, value: 6.48 },
+    { year: 2020, value: 7.11 },
+    { year: 2021, value: 6.8 },
     {
       year: 2022,
-      value: 24.5,
+      value: 21.92,
       annotationIcon: 'B',
-      annotation: 'By <b>2022</b>, that number was five times higher.',
+      annotation: 'By <b>2022</b>, that number was four times higher.',
     },
-    { year: 2023, value: 26.0 },
-    { year: 2024, value: 26.8 },
-    { year: 2025, value: 27.7 },
+    { year: 2023, value: 22.92 },
+    { year: 2024, value: 22.47 },
+    { year: 2025, value: 20.69 },
+    { year: '2026 (est.)', value: 19.13 },
     {
-      year: 2026,
-      value: 35.7,
+      year: '2027 (req.)',
+      value: 8.96,
       annotationIcon: 'C',
-      annotation: 'Proposed staff cuts would raise that number by another 33%.',
+      annotation:
+        'The <b>FY27 budget request</b> would cut that ratio in half, to levels not seen since before 2022.',
       calloutDx: -40,
     },
   ];
@@ -57,7 +59,7 @@
       },
       xAxis: { classes: { tickLabel: 'font-bold text-muted-foreground' } },
       yAxis: {
-        ticks: [0, 10, 20, 30, 40],
+        ticks: [0, 5, 10, 15, 20, 25],
         format: (v: number) => (v === 0 ? '' : `$${v}`),
         classes: { tickLabel: 'font-bold text-muted-foreground' },
       },
