@@ -1,11 +1,4 @@
 <script lang="ts">
-  //     	Announced	Awarded	Obligated
-  // 2025 Q1	$0	$0	$169,607,269
-  // 2025 Q2	$0	$19,847,566	$344,271,875
-  // 2025 Q3	$1,110,000,000	$0	$1,000,857,411
-  // 2025 Q4	$1,182,200,000	$819,600,000	$500,852,244
-  // 2026 Q1	$2,964,760,000	$3,337,500,000	$20,611,196
-
   import { BarChart } from 'layerchart';
   import Legend from './Legend.svelte';
   import { formatMoney } from '@/utils/format-money';
@@ -28,45 +21,47 @@
 </script>
 
 <div class="chart-container">
-  <Legend items={series.map(({ label, color }) => ({ label, color }))} />
+  <Legend
+    class="absolute top-0 right-0 z-2 border bg-white p-4 shadow"
+    items={series.map(({ label, color }) => ({ label, color }))}
+    stacked
+  />
   <div class="chart">
     <BarChart
       {data}
       {series}
-      x="quarter"
-      yDomain={[0, 4_000_000_000]}
+      y="quarter"
+      orientation="horizontal"
       seriesLayout="group"
       tooltip={false}
       props={{
         bars: { class: 'stroke-none', rounded: 'none' },
-        xAxis: { format: 'none', classes: { tickLabel: 'font-bold' } },
-        yAxis: {
+        yAxis: { format: 'none', classes: { tickLabel: 'font-bold' } },
+        xAxis: {
           format: (v: number) => (v === 0 ? '' : formatMoney(v, 1)),
           classes: { tickLabel: 'font-bold text-muted-foreground' },
         },
-        grid: { y: { style: '--stroke-color: var(--color-border)' } },
+        grid: { x: { style: '--stroke-color: var(--color-border)' } },
       }}
       renderContext="svg"
-      padding={{ left: 42, bottom: 30, top: 30 }}
+      padding={{ left: 60, bottom: 30, top: 30, right: 60 }}
     >
       {#snippet aboveMarks({ context })}
-        {@const barWidth = (context.xScale.bandwidth?.() ?? 0) / series.length}
+        {@const barHeight = (context.yScale.bandwidth?.() ?? 0) / series.length}
         {#each data as entry (entry.quarter)}
           {#each series as s, i (s.key)}
             {@const value = entry[s.key as DataKey]}
-            {#if value > 0}
-              {@const x = (context.xScale(entry.quarter) ?? 0) + i * barWidth + barWidth / 2}
-              {@const y = context.yScale(value) - 4}
-              <text
-                {x}
-                {y}
-                text-anchor="middle"
-                dominant-baseline="auto"
-                font-size="10"
-                font-weight="bold"
-                pointer-events="none">{formatMoney(value, 1)}</text
-              >
-            {/if}
+            {@const y = (context.yScale(entry.quarter) ?? 0) + i * barHeight + barHeight / 2}
+            {@const x = context.xScale(value) + 4}
+            <text
+              {x}
+              {y}
+              text-anchor="start"
+              dominant-baseline="middle"
+              font-size="10"
+              font-weight="bold"
+              pointer-events="none">{formatMoney(value, 1)}</text
+            >
           {/each}
         {/each}
       {/snippet}
@@ -81,6 +76,6 @@
 
   .chart {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 3 / 2;
   }
 </style>
