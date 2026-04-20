@@ -11,6 +11,9 @@ import BudgetProposalComparisons from './budgetProposalComparisons/BudgetProposa
 // import ChartStaffing from './staffing/ChartStaffing.svelte';
 import TBR from './tbr/ChartTBR.svelte';
 import CancelledVsFunded from './cancelledVsFunded/CancelledVsFunded.svelte';
+import StaffLevels from './StaffLevels.svelte';
+import StaffLevelsAtSelectOffices from './StaffLevelsAtSelectOffices.svelte';
+import SpendingAcrossOffices from './SpendingAcrossOffices.svelte';
 
 export type Page = 'Home' | 'Spending' | 'Projects' | 'People';
 
@@ -83,6 +86,21 @@ export const slugs: Record<string, Chart> = {
     page: 'People',
     Component: ResourcesRatio,
     title: 'And leave remaining staff with historically large workloads',
+  },
+  StaffLevels: {
+    page: 'People',
+    Component: StaffLevels,
+    title: "FTE levels at DOE's scoence and energy innovation office, FY25-27",
+  },
+  StaffLevelsAtSelectOffices: {
+    page: 'People',
+    Component: StaffLevelsAtSelectOffices,
+    title: 'Staff levels at select offices, FY25-27',
+  },
+  SpendingAcrossOffices: {
+    page: 'Spending',
+    Component: SpendingAcrossOffices,
+    title: 'Spending across offices by quarter, 2025–2026',
   },
 };
 
