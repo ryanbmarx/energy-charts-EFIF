@@ -10,7 +10,7 @@
     { quarter: '2025 Q2', announced: 0, awarded: 19_847_566, obligated: 344_271_875 },
     { quarter: '2025 Q3', announced: 1_110_000_000, awarded: 0, obligated: 1_000_857_411 },
     { quarter: '2025 Q4', announced: 1_182_200_000, awarded: 819_600_000, obligated: 500_852_244 },
-    { quarter: '2026 Q1', announced: 2_964_760_000, awarded: 3_337_500_000, obligated: 20_611_196 },
+    { quarter: '2026 Q1', announced: 2_964_760_000, awarded: 3_337_500_000, obligated: 81_555_316 },
   ];
 
   const series = [
