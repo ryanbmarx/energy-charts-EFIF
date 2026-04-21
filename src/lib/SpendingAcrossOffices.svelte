@@ -36,7 +36,11 @@
       tooltip={false}
       props={{
         bars: { class: 'stroke-none', rounded: 'none' },
-        yAxis: { format: 'none', classes: { tickLabel: 'font-bold' } },
+        yAxis: {
+          tickLabelProps: { class: 'font-bold text-sm' },
+          format: 'none',
+          classes: { tickLabel: 'font-bold' },
+        },
         xAxis: {
           format: (v: number) => (v === 0 ? '' : formatMoney(v, 1)),
           classes: { tickLabel: 'font-bold text-muted-foreground' },
@@ -44,7 +48,7 @@
         grid: { x: { style: '--stroke-color: var(--color-border)' } },
       }}
       renderContext="svg"
-      padding={{ left: 60, bottom: 30, top: 30, right: 60 }}
+      padding={{ left: 70, bottom: 30, top: 30, right: 60 }}
     >
       {#snippet aboveMarks({ context })}
         {@const barHeight = (context.yScale.bandwidth?.() ?? 0) / series.length}

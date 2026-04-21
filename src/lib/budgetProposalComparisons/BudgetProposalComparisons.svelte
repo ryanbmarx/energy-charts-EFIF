@@ -50,7 +50,7 @@
           tickMultiline: true,
           tickLabelProps: {
             width: 220,
-            style: 'font-size: 14px; font-weight: bold;',
+            class: 'font-bold text-sm',
             lineHeight: '1.15em',
             dx: -8,
           },
