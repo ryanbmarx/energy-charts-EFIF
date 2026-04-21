@@ -4,7 +4,7 @@
   const data = [
     { year: 'FY25', staffingFTE: 4547 },
     { year: 'FY26 (est.)', staffingFTE: 3778 },
-    { year: 'FY27 (est.)', staffingFTE: 3870 },
+    { year: 'FY27 (req.)', staffingFTE: 3870 },
   ];
 
   const labelFormat = (v: number) => v.toLocaleString('en-US');
@@ -19,6 +19,7 @@
       y="staffingFTE"
       cRange={['var(--middle-green)']}
       labels={{ format: labelFormat, style: 'font-weight: bold; font-size: .75rem;' }}
+      tooltip={false}
       props={{
         bars: { class: 'stroke-none', rounded: 'none' },
         xAxis: { format: 'none', classes: { tickLabel: 'font-bold' } },

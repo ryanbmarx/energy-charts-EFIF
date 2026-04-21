@@ -2,14 +2,6 @@
   import { BarChart } from 'layerchart';
   import Legend from './Legend.svelte';
 
-  /*
-	FY25	FY26 (est)	FY27 (req)
-NE	334	264	328
-EDF	208	105	140
-SC	774	600	575
-HGEO	573	573	588
-*/
-
   const data = [
     { office: 'NE', fy25: 334, fy26est: 264, fy27req: 328 },
     { office: 'EDF', fy25: 208, fy26est: 105, fy27req: 140 },
@@ -60,8 +52,8 @@ HGEO	573	573	588
               dominant-baseline="auto"
               font-size="11"
               font-weight="bold"
-              pointer-events="none"
-            >{value}</text>
+              pointer-events="none">{value}</text
+            >
           {/each}
         {/each}
       {/snippet}
